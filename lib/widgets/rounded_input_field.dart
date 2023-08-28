@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_assistance_system/constants.dart';
+import 'package:shopping_assistance_system/widgets/widgets.dart';
 
-class RoundedIcon extends StatelessWidget {
-  const RoundedIcon({Key? key, required this.imageUrl}) : super(key: key);
-  final String imageUrl;
+class RoundedInputField extends StatelessWidget {
+  final String? hintText;
+  final IconData icon;
+
+  const RoundedInputField({
+    Key? key,
+    this.hintText,
+    this.icon = Icons.person,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.black26, offset: Offset(0, 2), blurRadius: 0.6),
-            ],
-            image: DecorationImage(
-              image: AssetImage(imageUrl),
-            )),
+    return TextFieldContainer(
+      child: TextFormField(
+        cursorColor: kPrimaryColor,
+        decoration: InputDecoration(
+          icon: Icon(
+            icon,
+            color: kPrimaryColor,
+          ),
+          hintText: hintText,
+          hintStyle: const TextStyle(fontFamily: 'OpenSans'),
+          border: InputBorder.none,
+        ),
       ),
     );
   }
