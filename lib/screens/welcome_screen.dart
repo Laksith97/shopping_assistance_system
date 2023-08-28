@@ -31,7 +31,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      "images/welcome.png",
+                      "assets/images/welcome.png",
                       scale: 0.8,
                     ),
                   ),
@@ -97,8 +97,7 @@ class WelcomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => LoginScreen(),
-                              )
-                          );
+                              ));
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(

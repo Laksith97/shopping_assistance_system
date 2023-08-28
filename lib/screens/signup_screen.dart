@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
-import 'package:shopping_assistance_system/constants.dart';
+//import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class LoginScreen extends StatelessWidget {
             child: Stack(
               children: [
                 const Upside(
-                  imgUrl: "assets/images/login.png",
+                  imgUrl: "assets/images/register.png",
                 ),
-                const PageTitleBar(title: 'Login to your account'),
+                const PageTitleBar(title: 'Create New Account'),
                 Padding(
                   padding: const EdgeInsets.only(top: 320.0),
                   child: Container(
@@ -57,37 +57,27 @@ class LoginScreen extends StatelessWidget {
                             children: [
                               const RoundedInputField(
                                   hintText: "Email", icon: Icons.email),
+                              const RoundedInputField(
+                                  hintText: "Name", icon: Icons.person),
                               const RoundedPasswordField(),
-                              switchListTile(),
-                              RoundedButton(text: 'LOGIN', press: () {}),
+                              RoundedButton(text: 'REGISTER', press: () {}),
                               const SizedBox(
                                 height: 10,
                               ),
                               UnderPart(
-                                title: "Don't have an account?",
-                                navigatorText: "Register here",
+                                title: "Already have an account?",
+                                navigatorText: "Login here",
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const SignUpScreen()));
+                                              const LoginScreen()));
                                 },
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              const Text(
-                                'Forgot password?',
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontFamily: 'OpenSans',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              )
                             ],
                           ),
                         )
@@ -102,33 +92,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-switchListTile() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 50, right: 40),
-    // child: SwitchListTile(
-    //   dense: true,
-    //   title: const Text(
-    //     'Remember Me',
-    //     style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
-    //   ),
-    //   value: true,
-    //   activeColor: kPrimaryColor,
-    //   onChanged: (val) {},
-    // ),
-  );
-}
-
-iconButton(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: const [
-      RoundedIcon(imageUrl: "assets/images/facebook.png"),
-      SizedBox(
-        width: 20,
-      ),
-      RoundedIcon(imageUrl: "assets/images/google.jpg"),
-    ],
-  );
 }
