@@ -4,6 +4,7 @@ import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
+import 'package:shopping_assistance_system/screens/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -59,9 +60,16 @@ class LoginScreen extends StatelessWidget {
                                   hintText: "Email", icon: Icons.email),
                               const RoundedPasswordField(),
                               switchListTile(),
-                              RoundedButton(text: 'LOGIN', press: () {}),
-                              const SizedBox(
-                                height: 10,
+                              RoundedButton(
+                                text: 'LOGIN',
+                                press: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EntryPoint()), // Navigate to home screen
+                                  );
+                                },
                               ),
                               UnderPart(
                                 title: "Don't have an account?",
@@ -107,16 +115,6 @@ class LoginScreen extends StatelessWidget {
 switchListTile() {
   return Padding(
     padding: const EdgeInsets.only(left: 50, right: 40),
-    // child: SwitchListTile(
-    //   dense: true,
-    //   title: const Text(
-    //     'Remember Me',
-    //     style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
-    //   ),
-    //   value: true,
-    //   activeColor: kPrimaryColor,
-    //   onChanged: (val) {},
-    // ),
   );
 }
 
