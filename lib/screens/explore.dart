@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Chart extends StatefulWidget {
-  const Chart({super.key});
+class Explore extends StatefulWidget {
+  const Explore({super.key});
 
   @override
-  State<Chart> createState() => _ChartState();
+  State<Explore> createState() => _ExploreState();
 }
 
-class _ChartState extends State<Chart> {
+class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('Chart'),
+        child: Text('Explore'),
       ),
     );
   }

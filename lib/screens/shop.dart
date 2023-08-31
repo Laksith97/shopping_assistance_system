@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class Shop extends StatefulWidget {
+  const Shop({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<Shop> createState() => _ShopState();
 }
 
-class _SettingsState extends State<Settings> {
+class _ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('Settings'),
+        child: Text('Shop'),
       ),
     );
   }
