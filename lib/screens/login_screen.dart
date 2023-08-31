@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
+import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 import 'package:shopping_assistance_system/screens/home_screen.dart';
@@ -60,14 +61,25 @@ class LoginScreen extends StatelessWidget {
                                   hintText: "Email", icon: Icons.email),
                               const RoundedPasswordField(),
                               switchListTile(),
+                              // RoundedButton(
+                              //   text: 'LOGIN',
+                              //   press: () {
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               Home()), // Navigate to home screen
+                              //     );
+                              //   },
+                              // ),
                               RoundedButton(
                                 text: 'LOGIN',
                                 press: () {
+                                  // Navigate to the Home screen after tapping the login button
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EntryPoint()), // Navigate to home screen
+                                        builder: (context) => NavBar()),
                                   );
                                 },
                               ),
