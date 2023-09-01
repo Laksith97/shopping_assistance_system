@@ -13,7 +13,7 @@ class _AccountState extends State<Account> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Account'),
-        backgroundColor: Color(0xFF2E4057),
+        backgroundColor: Color(0xFF4EE50C),
       ),
       backgroundColor: Colors.white,
       body: Center(

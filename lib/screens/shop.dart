@@ -17,6 +17,7 @@ class _ShopState extends State<Shop> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Shop'),
+        backgroundColor: Color(0xFF0C8E81),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -33,7 +34,7 @@ class _ShopState extends State<Shop> {
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'search...',
+                  hintText: 'search for product',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0)

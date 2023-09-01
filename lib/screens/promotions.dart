@@ -13,7 +13,7 @@ class _PromotionsState extends State<Promotions> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Promotions'),
-        backgroundColor: Color(0xFF59CD90),
+        backgroundColor: Color(0xFF1DB274),
       ),
       backgroundColor: Colors.white,
       body: Center(
