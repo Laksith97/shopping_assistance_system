@@ -9,13 +9,7 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
   TextEditingController searchController = TextEditingController();
-  bool isSearchVisible = false;
-
-  void toggleSearchVisibility() {
-    setState(() {
-      isSearchVisible = !isSearchVisible;
-    });
-  }
+  bool isSearchVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,34 +19,27 @@ class _ShopState extends State<Shop> {
         title: Text('Shop'),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              toggleSearchVisibility(); // Toggle the visibility of the search area
+              // Add your cart functionality here
             },
           ),
         ],
       ),
       body: Column(
         children: [
-          Visibility(
-            visible: isSearchVisible,
-            child: Padding(
+          Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'search...',
                   prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0)
+                  )
                 ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text('Shop Content'),
-            ),
-          ),
-        ],
+              ),)],
       ),
     );
   }
