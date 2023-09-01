@@ -33,7 +33,7 @@ class _ShopState extends State<Shop> {
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'search...',
+                  hintText: 'search for product',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0)
