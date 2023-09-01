@@ -10,7 +10,11 @@ class Promotions extends StatefulWidget {
 class _PromotionsState extends State<Promotions> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Promotions'),
+        backgroundColor: Color(0xFF59CD90),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: Text('Promotions'),
