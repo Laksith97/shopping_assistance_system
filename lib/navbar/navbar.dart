@@ -4,7 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:shopping_assistance_system/controller/controller.dart';
 import 'package:shopping_assistance_system/screens/promotions.dart';
 import 'package:shopping_assistance_system/screens/shop.dart';
-import 'package:shopping_assistance_system/screens/explore.dart';
+import 'package:shopping_assistance_system/screens/notification.dart';
 import 'package:shopping_assistance_system/screens/account.dart';
 
 class NavBar extends StatefulWidget {
@@ -21,7 +21,7 @@ class _NavBarState extends State<NavBar> {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: const [Shop(), Explore(), Promotions(), Account()],
+          children: const [Shop(), Notifications(), Promotions(), Account()],
         ),
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.amber,
@@ -30,7 +30,7 @@ class _NavBarState extends State<NavBar> {
             onTap: controller.changeTabIndex,
             items: [
               _bottombarItem(IconlyBold.bag, "Shop"),
-              _bottombarItem(IconlyBold.search, "Explore"),
+              _bottombarItem(IconlyBold.notification, "Notifications"),
               _bottombarItem(IconlyBold.discount, "Promotions"),
               _bottombarItem(IconlyBold.profile, "Account"),
             ]),
