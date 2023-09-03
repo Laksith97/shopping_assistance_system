@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_assistance_system/screens/cart.dart';
 
 class Shop extends StatefulWidget {
   const Shop({Key? key}) : super(key: key);
@@ -23,6 +24,10 @@ class _ShopState extends State<Shop> {
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               // Add your cart functionality here
+              Navigator.push
+                (context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+              );
             },
           ),
         ],
