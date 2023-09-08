@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
-import 'package:shopping_assistance_system/screens/chart.dart';
-import 'package:shopping_assistance_system/screens/home_screen.dart';
-import 'package:shopping_assistance_system/screens/note.dart';
-import 'package:shopping_assistance_system/screens/settings.dart';
+import 'package:shopping_assistance_system/screens/promotions.dart';
+import 'package:shopping_assistance_system/screens/shop.dart';
+import 'package:shopping_assistance_system/screens/notification.dart';
+import 'package:shopping_assistance_system/screens/account.dart';
 
 class AppPage {
   static List<GetPage> routes = [
     GetPage(name: navbar, page: () => const NavBar()),
-    GetPage(name: home, page: () => const Home()),
-    GetPage(name: note, page: () => const Note()),
-    GetPage(name: chart, page: () => const Chart()),
-    GetPage(name: setting, page: () => const Settings())
+    GetPage(name: home, page: () => const Shop()),
+    GetPage(name: note, page: () => const Notifications()),
+    GetPage(name: chart, page: () => const Promotions()),
+    GetPage(name: setting, page: () => const Account())
   ];
 
   static getnavbar() => navbar;

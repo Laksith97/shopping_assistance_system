@@ -3,7 +3,6 @@ import 'package:shopping_assistance_system/screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
-  //initializeApp();
 }
 
 class MyApp extends StatelessWidget {

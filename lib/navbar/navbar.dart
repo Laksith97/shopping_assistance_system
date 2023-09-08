@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shopping_assistance_system/controller/controller.dart';
-import 'package:shopping_assistance_system/screens/chart.dart';
-import 'package:shopping_assistance_system/screens/home_screen.dart';
-import 'package:shopping_assistance_system/screens/note.dart';
-import 'package:shopping_assistance_system/screens/settings.dart';
+import 'package:shopping_assistance_system/screens/promotions.dart';
+import 'package:shopping_assistance_system/screens/shop.dart';
+import 'package:shopping_assistance_system/screens/notification.dart';
+import 'package:shopping_assistance_system/screens/account.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -21,7 +21,7 @@ class _NavBarState extends State<NavBar> {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: const [Home(), Note(), Chart(), Settings()],
+          children: const [Shop(), Notifications(), Promotions(), Account()],
         ),
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.amber,
@@ -29,10 +29,10 @@ class _NavBarState extends State<NavBar> {
             currentIndex: controller.tabIndex,
             onTap: controller.changeTabIndex,
             items: [
-              _bottombarItem(IconlyBold.home, "Home"),
-              _bottombarItem(IconlyBold.document, "Note"),
-              _bottombarItem(IconlyBold.chart, "chart"),
-              _bottombarItem(IconlyBold.setting, "setting"),
+              _bottombarItem(IconlyBold.bag, "Shop"),
+              _bottombarItem(IconlyBold.notification, "Notifications"),
+              _bottombarItem(IconlyBold.discount, "Promotions"),
+              _bottombarItem(IconlyBold.profile, "Account"),
             ]),
       );
     });
