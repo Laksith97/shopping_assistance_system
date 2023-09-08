@@ -52,7 +52,7 @@ class _ShopState extends State<Shop> {
                 SizedBox(
                     height: 180,
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: 4,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => Container(
                         height: 100,
