@@ -5,7 +5,6 @@ import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
-import 'package:shopping_assistance_system/screens/shop.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
