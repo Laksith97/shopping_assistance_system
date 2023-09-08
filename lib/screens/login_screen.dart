@@ -61,17 +61,6 @@ class LoginScreen extends StatelessWidget {
                                   hintText: "Email", icon: Icons.email),
                               const RoundedPasswordField(),
                               switchListTile(),
-                              // RoundedButton(
-                              //   text: 'LOGIN',
-                              //   press: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               Home()), // Navigate to home screen
-                              //     );
-                              //   },
-                              // ),
                               RoundedButton(
                                 text: 'LOGIN',
                                 press: () {
