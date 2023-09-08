@@ -6,6 +6,7 @@ import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -127,6 +128,12 @@ iconButton(BuildContext context) {
         width: 20,
       ),
       RoundedIcon(imageUrl: "assets/images/google.jpg"),
+      SizedBox(
+        width: 20,
+      ),
+      RoundedIcon(imageUrl: "assets/images/github.png"),
+
+
     ],
   );
 }
