@@ -14,6 +14,21 @@ class _NotificationsState extends State<Notifications> {
     'Notification 3',
   ];
 
+  Future<void> _refreshNotifications() async {
+    // Simulate fetching new notifications from an API or other data source.
+    await Future.delayed(Duration(seconds: 2)); // Simulating a delay.
+
+    setState(() {
+      // Replace the notifications list with updated data.
+      notifications = [
+        'Updated Notification 1',
+        'Updated Notification 2',
+        'Updated Notification 3',
+      ];
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,40 +37,43 @@ class _NotificationsState extends State<Notifications> {
         backgroundColor: Color(0xFFC4593B),
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (BuildContext context, int index) {
-          final notification = notifications[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationDetail(notification),
-                ),
-              );
-            },
-            child: Dismissible(
-              key: Key(notification), // Unique key for each notification
-              onDismissed: (direction) {
-                setState(() {
-                  notifications.removeAt(index);
-                });
+      body: RefreshIndicator(
+        onRefresh: _refreshNotifications,
+        child: ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (BuildContext context, int index) {
+            final notification = notifications[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationDetail(notification),
+                  ),
+                );
               },
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
+              child: Dismissible(
+                key: Key(notification), // Unique key for each notification
+                onDismissed: (direction) {
+                  setState(() {
+                    notifications.removeAt(index);
+                  });
+                },
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                ),
+                child: ListTile(
+                  title: Text(notification),
                 ),
               ),
-              child: ListTile(
-                title: Text(notification),
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
