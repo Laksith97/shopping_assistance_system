@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/cart.dart';
+import 'package:shopping_assistance_system/screens/product.dart';
 
 class Shop extends StatefulWidget {
   const Shop({Key? key}) : super(key: key);
@@ -27,18 +28,17 @@ class _ShopState extends State<Shop> {
               // Add your cart functionality here
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
+                MaterialPageRoute(
+                    builder: (context) => CartScreen(cartItems: cartItems)),
               );
             },
           ),
         ],
       ),
       body: Container(
-        // Adding ListView for recommended products
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Adding Text Field for Search products
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
@@ -75,15 +75,15 @@ class _ShopState extends State<Shop> {
                       margin: EdgeInsets.all(10),
                       child: GestureDetector(
                         onTap: () {
-                          // Handle the tap operation for the selected item here
                           setState(() {
                             tappedIndex = index;
+                            cartItems.add(
+                                Product(name: "Product $index", price: 10.0));
                           });
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
-                            // Adjust the radius as needed
                           ),
                           child: Center(
                             child: Text("Card $index"),
@@ -102,3 +102,5 @@ class _ShopState extends State<Shop> {
     );
   }
 }
+
+List<Product> cartItems = [];
