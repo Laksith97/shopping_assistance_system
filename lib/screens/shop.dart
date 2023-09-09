@@ -57,7 +57,7 @@ class _ShopState extends State<Shop> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 49, 83, 235),
+                    color: Color(0xFF3153EB),
                   ),
                 ),
               ),
