@@ -49,10 +49,21 @@ class _ShopState extends State<Shop> {
                             borderRadius: BorderRadius.circular(25.0))),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    "Recommended Products",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 49, 83, 235),
+                    ),
+                  ),
+                ),
                 SizedBox(
-                    height: 180,
+                    height: 150,
                     child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: 5,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => Container(
                         height: 100,
