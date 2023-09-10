@@ -11,6 +11,18 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  // Map to track item counts in the cart
+  final Map<Product, int> itemCountMap = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize item counts based on the items in the cart
+    for (final item in widget.cartItems) {
+      itemCountMap[item] = 1; // Initial count is 1
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,18 +61,83 @@ class _CartScreenState extends State<CartScreen> {
                 itemCount: widget.cartItems.length,
                 itemBuilder: (context, index) {
                   final item = widget.cartItems[index];
+                  final itemCount = itemCountMap[item] ?? 0; // Get item count
+
                   return Card(
                     margin: EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: Text(item.name),
-                      subtitle: Text('\$${item.price.toStringAsFixed(2)}'),
-                      trailing: IconButton(
-                        icon: Icon(Icons.remove_circle),
-                        onPressed: () {
-                          setState(() {
-                            widget.cartItems.removeAt(index);
-                          });
-                        },
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0), // Adjust padding as needed
+                      child: ListTile(
+                        title: Text(
+                          item.name,
+                          style: TextStyle(
+                            fontSize: 16.0, // Increase text size
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle, // Circular shape
+                                color:
+                                    Colors.red, // Set color for remove button
+                              ),
+                              child: IconButton(
+                                icon: Icon(Icons.remove),
+                                color: Colors.white, // Text color
+                                iconSize: 20.0, // Reduce button size
+                                onPressed: () {
+                                  // Decrease item count
+                                  setState(() {
+                                    if (itemCount > 1) {
+                                      itemCountMap[item] = itemCount - 1;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10), // Add spacing
+                            Text(
+                              '$itemCount',
+                              style: TextStyle(
+                                fontSize: 16.0, // Increase text size
+                              ),
+                            ), // Show item count
+                            SizedBox(width: 10), // Add spacing
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle, // Circular shape
+                                color: Colors.green, // Set color for add button
+                              ),
+                              child: IconButton(
+                                icon: Icon(Icons.add),
+                                color: Colors.white, // Text color
+                                iconSize: 20.0, // Reduce button size
+                                onPressed: () {
+                                  // Increase item count
+                                  setState(() {
+                                    itemCountMap[item] = itemCount + 1;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.remove_circle),
+                          onPressed: () {
+                            setState(() {
+                              // Remove item from cart when count is 0
+                              if (itemCount == 1) {
+                                widget.cartItems.remove(item);
+                                itemCountMap.remove(item);
+                              } else if (itemCount > 1) {
+                                itemCountMap[item] = itemCount - 1;
+                              }
+                            });
+                          },
+                        ),
                       ),
                     ),
                   );
