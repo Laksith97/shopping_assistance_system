@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_assistance_system/screens/cart.dart';
-import 'package:shopping_assistance_system/screens/product.dart';
+import 'package:shopping_assistance_system/screens/cartScreen.dart';
+import 'package:shopping_assistance_system/screens/productScreen.dart';
 
-class Shop extends StatefulWidget {
-  const Shop({Key? key}) : super(key: key);
+class ShopScreen extends StatefulWidget {
+  const ShopScreen({Key? key}) : super(key: key);
 
   @override
-  _ShopState createState() => _ShopState();
+  _ShopScreenState createState() => _ShopScreenState();
 }
 
-class _ShopState extends State<Shop> {
+class _ShopScreenState extends State<ShopScreen> {
   TextEditingController searchController = TextEditingController();
   bool isSearchVisible = true;
   int tappedIndex = -1;
