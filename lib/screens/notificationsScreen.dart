@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Notifications extends StatefulWidget {
-  const Notifications({Key? key});
+class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({Key? key});
 
   @override
-  State<Notifications> createState() => _NotificationsState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationsScreenState extends State<NotificationsScreen> {
   List<String> notifications = [
     'Notification 1',
     'Notification 2',

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Promotions extends StatefulWidget {
-  const Promotions({super.key});
+class PromotionsScreen extends StatefulWidget {
+  const PromotionsScreen({super.key});
 
   @override
-  State<Promotions> createState() => _PromotionsState();
+  State<PromotionsScreen> createState() => _PromotionsScreenState();
 }
 
-class _PromotionsState extends State<Promotions> {
+class _PromotionsScreenState extends State<PromotionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

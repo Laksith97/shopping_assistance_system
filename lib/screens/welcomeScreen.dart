@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_assistance_system/screens/login_screen.dart';
+import 'package:shopping_assistance_system/screens/loginScreen.dart';
 
 import '../constants.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_assistance_system/screens/product.dart';
+import 'package:shopping_assistance_system/screens/productScreen.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
