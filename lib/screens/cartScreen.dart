@@ -66,12 +66,12 @@ class _CartScreenState extends State<CartScreen> {
                   return Card(
                     margin: EdgeInsets.all(8.0),
                     child: Padding(
-                      padding: EdgeInsets.all(12.0), // Adjust padding as needed
+                      padding: EdgeInsets.all(15.0), // Adjust padding as needed
                       child: ListTile(
                         title: Text(
                           item.name,
                           style: TextStyle(
-                            fontSize: 16.0, // Increase text size
+                            fontSize: 20.0, // Increase text size
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -86,7 +86,7 @@ class _CartScreenState extends State<CartScreen> {
                               child: IconButton(
                                 icon: Icon(Icons.remove),
                                 color: Colors.white, // Text color
-                                iconSize: 20.0, // Reduce button size
+                                iconSize: 18.0, // Reduce button size
                                 onPressed: () {
                                   // Decrease item count
                                   setState(() {
