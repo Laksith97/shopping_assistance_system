@@ -4,6 +4,7 @@ import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 //import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
+import 'package:shopping_assistance_system/widgets/rounded_name_field.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,6 +20,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -85,6 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                         Form(
+                          key: _formKey,
                           child: Column(
                             children: [
                               RoundedInputField(
@@ -92,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 icon: Icons.email,
                                 controller: emailController,
                               ),
-                              RoundedInputField(
+                              RoundedNameField(
                                 hintText: "Name",
                                 icon: Icons.person,
                                 controller: nameController,
@@ -103,6 +108,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               RoundedButton(
                                 text: 'REGISTER',
                                 press: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    String email = emailController.text.trim();
+                                    String name = nameController.text.trim();
+                                    String password = passwordController.text.trim();
+
+                                    await registerUser(email, name, password);
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                    );
+                                  }
                                   // Logging values before sending
                                   print(
                                       'Email Controller Value: ${emailController.text}');
@@ -112,20 +130,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       'Password Controller Value: ${passwordController.text}');
 
                                   // Retrieve and trim values
-                                  String email = emailController.text.trim();
-                                  String name = nameController.text.trim();
-                                  String password =
-                                      passwordController.text.trim();
 
                                   // Register user
-                                  await registerUser(email, name, password);
 
                                   // Navigate to Login screen
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                  );
                                 },
                               ),
                               const SizedBox(

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/widgets/text_field_container.dart';
 
-class RoundedInputField extends StatelessWidget {
+class RoundedNameField extends StatelessWidget {
   final String? hintText;
   final IconData icon;
   final TextEditingController? controller; // Add this line
 
-  const RoundedInputField({
+  const RoundedNameField({
     Key? key,
     this.hintText,
     this.icon = Icons.person,
@@ -22,12 +22,8 @@ class RoundedInputField extends StatelessWidget {
         cursorColor: kPrimaryColor,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your email';
+            return "Please enter your name";
           }
-          if (!value.contains('@')) {
-            return 'Invalid email format';
-          }
-          return null;
         },
         decoration: InputDecoration(
           icon: Icon(
