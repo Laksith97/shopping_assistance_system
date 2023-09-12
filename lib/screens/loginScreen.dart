@@ -177,13 +177,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const Text(
-                                'Forgot password?',
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontFamily: 'OpenSans',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PasswordResetRequestScreen()),
+                                  );
+                                },
+                                child: const Text(
+                                  'Forgot password?',
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13),
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,
