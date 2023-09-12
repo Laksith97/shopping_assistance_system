@@ -1,13 +1,14 @@
-// 1. Password Reset Request Screen
 import 'package:flutter/material.dart';
-import 'your_http_service.dart';  // Import your HTTP service
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+// 1. Password Reset Request Screen
 class PasswordResetRequestScreen extends StatefulWidget {
   @override
   _PasswordResetRequestScreenState createState() => _PasswordResetRequestScreenState();
 }
 class _PasswordResetRequestScreenState extends State<PasswordResetRequestScreen> {
   final emailController = TextEditingController();
-  final httpService = YourHttpService();
+  final String baseUrl = 'http://your_backend_url_here';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +24,15 @@ class _PasswordResetRequestScreenState extends State<PasswordResetRequestScreen>
             ElevatedButton(
               child: Text('Request Password Reset'),
               onPressed: () async {
-                // Make request to backend
-                final response = await httpService.requestPasswordReset(emailController.text);
-                if (response.success) {
-                  // Navigate or show success message
+                final response = await http.post(
+                  Uri.parse('$baseUrl/forgot-password'),
+                  body: jsonEncode({'email': emailController.text}),
+                  headers: {'Content-Type': 'application/json'},
+                );
+                if (response.statusCode == 200) {
+                  // Handle success (e.g., navigate to another screen or show a message)
                 } else {
-                  // Show error message
+                  // Handle error
                 }
               },
             ),
@@ -46,7 +50,7 @@ class PasswordResetScreen extends StatefulWidget {
 class _PasswordResetScreenState extends State<PasswordResetScreen> {
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final httpService = YourHttpService();
+  final String baseUrl = 'http://your_backend_url_here';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,12 +73,15 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
               child: Text('Reset Password'),
               onPressed: () async {
                 if (newPasswordController.text == confirmPasswordController.text) {
-                  // Make request to backend
-                  final response = await httpService.resetPassword(newPasswordController.text);
-                  if (response.success) {
-                    // Navigate or show success message
+                  final response = await http.post(
+                    Uri.parse('$baseUrl/reset-password'),
+                    body: jsonEncode({'password': newPasswordController.text}),
+                    headers: {'Content-Type': 'application/json'},
+                  );
+                  if (response.statusCode == 200) {
+                    // Handle success (e.g., navigate to another screen or show a message)
                   } else {
-                    // Show error message
+                    // Handle error
                   }
                 } else {
                   // Show password mismatch error
