@@ -144,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> registerUser(String email, String name, String password) async {
-    final url = 'http://16.171.14.68:5000/signup.py';
+    final url = 'http://16.171.14.68:5000/signup';
 
     print('Sending to Server:');
     print('Email: $email');
@@ -163,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (response.statusCode == 200) {
       print("Response from server: ${response.body}");
     } else {
-      print("Error: ${response.body}");
+      print("Registration : ${response.body}");
     }
   }
 }
