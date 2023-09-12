@@ -4,6 +4,8 @@ import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
+import 'package:shopping_assistance_system/widgets/LoginPassword.dart';
+import 'package:shopping_assistance_system/widgets/login_email.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 import 'package:http/http.dart' as http; // Import the http package for making HTTP requests
 import 'dart:convert';
@@ -16,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -89,68 +93,71 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                         Form(
+                          key: _formKey,
                           child: Column(
                             children: [
-                              RoundedInputField(
+                              LoginEmail(
                                 hintText: "Email",
                                 icon: Icons.email,
                                 controller: emailController,
                               ),
-                              RoundedPasswordField(
+                              LoginPassword(
                                 controller: passwordController,
                               ),
                               switchListTile(),
                               RoundedButton(
                                 text: 'LOGIN',
                                 press: () async {
-                                  String email = emailController.text.trim();
-                                  String password = passwordController.text.trim();
+                                  if (_formKey.currentState!.validate()) {
+                                    String email = emailController.text.trim();
+                                    String password = passwordController.text.trim();
 
-                                  final response = await http.post(
-                                    Uri.parse(url),
-                                    body: {
-                                      'email': email,
-                                      'password': password,
-                                    },
-                                  );
-
-                                  if (response.statusCode == 200) {
-                                    // Successful login
-                                    final responseData = json.decode(response.body);
-                                    final token = responseData['token'];
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => NavBar()
-                                        ));
-                                  } else {
-                                    // Handle login failure
-                                    final errorMessage = json.decode(response.body)['message'];
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: Text(
-                                            'Login Failed',
-                                        style: TextStyle(
-                                          color: Colors.redAccent,
-                                        ),
-                                        ),
-                                        content: Text(
-                                            errorMessage,
-                                        style: TextStyle(
-                                          color: Colors.redAccent,
-                                        ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('OK'),
-                                          ),
-                                        ],
-                                      ),
+                                    final response = await http.post(
+                                      Uri.parse(url),
+                                      body: {
+                                        'email': email,
+                                        'password': password,
+                                      },
                                     );
+
+                                    if (response.statusCode == 200) {
+                                      // Successful login
+                                      final responseData = json.decode(response.body);
+                                      final token = responseData['token'];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NavBar()
+                                          ));
+                                    } else {
+                                      // Handle login failure
+                                      final errorMessage = json.decode(response.body)['message'];
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: Text(
+                                            'Login Failed',
+                                            style: TextStyle(
+                                              color: Colors.redAccent,
+                                            ),
+                                          ),
+                                          content: Text(
+                                            errorMessage,
+                                            style: TextStyle(
+                                              color: Colors.redAccent,
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
                                   }
                                 },
                               ),
