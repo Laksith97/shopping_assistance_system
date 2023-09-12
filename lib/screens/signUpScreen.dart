@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 //import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 
-class SignUpScreen extends StatelessWidget {
+import 'package:http/http.dart' as http;
+
+import 'dart:convert';
+import 'dart:async';
+
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +70,47 @@ class SignUpScreen extends StatelessWidget {
                         Form(
                           child: Column(
                             children: [
-                              const RoundedInputField(
-                                  hintText: "Email", icon: Icons.email),
-                              const RoundedInputField(
-                                  hintText: "Name", icon: Icons.person),
-                              const RoundedPasswordField(),
-                              RoundedButton(text: 'REGISTER', press: () {}),
+                              RoundedInputField(
+                                hintText: "Email",
+                                icon: Icons.email,
+                                controller: emailController,
+                              ),
+                              RoundedInputField(
+                                hintText: "Name",
+                                icon: Icons.person,
+                                controller: nameController,
+                              ),
+                              RoundedPasswordField(
+                                controller: passwordController,
+                              ),
+                              RoundedButton(
+                                text: 'REGISTER',
+                                press: () async {
+                                  // Logging values before sending
+                                  print(
+                                      'Email Controller Value: ${emailController.text}');
+                                  print(
+                                      'Name Controller Value: ${nameController.text}');
+                                  print(
+                                      'Password Controller Value: ${passwordController.text}');
+
+                                  // Retrieve and trim values
+                                  String email = emailController.text.trim();
+                                  String name = nameController.text.trim();
+                                  String password =
+                                      passwordController.text.trim();
+
+                                  // Register user
+                                  await registerUser(email, name, password);
+
+                                  // Navigate to Login screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                  );
+                                },
+                              ),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -91,5 +141,29 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> registerUser(String email, String name, String password) async {
+    final url = 'http://16.171.14.68:5000/signup';
+
+    print('Sending to Server:');
+    print('Email: $email');
+    print('Name: $name');
+    print('Password: $password');
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: {
+        'email': email,
+        'name': name,
+        'password': password,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print("Response from server: ${response.body}");
+    } else {
+      print("Registration : ${response.body}");
+    }
   }
 }
