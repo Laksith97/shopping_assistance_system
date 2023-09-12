@@ -5,9 +5,44 @@ import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
+import 'package:http/http.dart' as http; // Import the http package for making HTTP requests
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  String get url => 'http://16.171.14.68:5101/login';
+
+  switchListTile() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 40),
+    );
+  }
+
+  iconButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        RoundedIcon(imageUrl: "assets/images/facebook.png"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/google.jpg"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/github.png"),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +92,66 @@ class LoginScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               RoundedInputField(
-                                  hintText: "Email", icon: Icons.email),
-                              RoundedPasswordField(),
+                                hintText: "Email",
+                                icon: Icons.email,
+                                controller: emailController,
+                              ),
+                              RoundedPasswordField(
+                                controller: passwordController,
+                              ),
                               switchListTile(),
                               RoundedButton(
                                 text: 'LOGIN',
-                                press: () {
-                                  // Navigate to the Home screen after tapping the login button
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => NavBar()),
+                                press: () async {
+                                  String email = emailController.text.trim();
+                                  String password = passwordController.text.trim();
+
+                                  final response = await http.post(
+                                    Uri.parse(url),
+                                    body: {
+                                      'email': email,
+                                      'password': password,
+                                    },
                                   );
+
+                                  if (response.statusCode == 200) {
+                                    // Successful login
+                                    final responseData = json.decode(response.body);
+                                    final token = responseData['token'];
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => NavBar()
+                                        ));
+                                  } else {
+                                    // Handle login failure
+                                    final errorMessage = json.decode(response.body)['message'];
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text(
+                                            'Login Failed',
+                                        style: TextStyle(
+                                          color: Colors.redAccent,
+                                        ),
+                                        ),
+                                        content: Text(
+                                            errorMessage,
+                                        style: TextStyle(
+                                          color: Colors.redAccent,
+                                        ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
                                 },
                               ),
                               UnderPart(
@@ -76,10 +159,11 @@ class LoginScreen extends StatelessWidget {
                                 navigatorText: "Register here",
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SignUpScreen()));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const SignUpScreen()),
+                                  );
                                 },
                               ),
                               const SizedBox(
@@ -110,27 +194,5 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-switchListTile() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 50, right: 40),
-  );
-}
-
-iconButton(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: const [
-      RoundedIcon(imageUrl: "assets/images/facebook.png"),
-      SizedBox(
-        width: 20,
-      ),
-      RoundedIcon(imageUrl: "assets/images/google.jpg"),
-      SizedBox(
-        width: 20,
-      ),
-      RoundedIcon(imageUrl: "assets/images/github.png"),
-    ],
-  );
+// The rest of your functions (iconButton and switchListTile) remain unchanged
 }

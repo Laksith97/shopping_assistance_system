@@ -23,6 +23,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  iconButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        RoundedIcon(imageUrl: "assets/images/facebook.png"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/google.jpg"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/github.png"),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
