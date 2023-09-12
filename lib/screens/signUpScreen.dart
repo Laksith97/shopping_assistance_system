@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 //import 'package:shopping_assistance_system/constants.dart';
@@ -8,7 +8,7 @@ import 'package:shopping_assistance_system/widgets/widgets.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:async';
 
 class SignUpScreen extends StatefulWidget {
