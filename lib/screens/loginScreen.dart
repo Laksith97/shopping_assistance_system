@@ -19,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  String get url => 'http://16.171.14.68:5101/login';
+
   switchListTile() {
     return Padding(
       padding: const EdgeInsets.only(left: 50, right: 40),
@@ -40,50 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
         RoundedIcon(imageUrl: "assets/images/github.png"),
       ],
     );
-  }
-
-  Future<void> loginUser(String email, String password) async {
-    final url = 'http://16.171.14.68:5100/login';
-
-    print('Sending to Server:');
-    print('Email: $email');
-    print('Password: $password');
-
-    final response = await http.post(
-      Uri.parse(url),
-      body: {
-        'email': email,
-        'password': password,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      // Successful login
-      // You can handle the response data here, e.g., storing tokens, navigating to home screen, etc.
-      final responseData = json.decode(response.body);
-      // Example: Store the user token in a shared preference or state management
-      // final token = responseData['token'];
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => NavBar()));
-    } else {
-      // Handle login failure
-      final errorMessage = json.decode(response.body)['message'];
-      // You can show an error message to the user
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text(errorMessage),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
   }
 
   @override
@@ -148,8 +106,52 @@ class _LoginScreenState extends State<LoginScreen> {
                                   String email = emailController.text.trim();
                                   String password = passwordController.text.trim();
 
-                                  // Call the loginUser function to perform login
-                                  await loginUser(email, password);
+                                  final response = await http.post(
+                                    Uri.parse(url),
+                                    body: {
+                                      'email': email,
+                                      'password': password,
+                                    },
+                                  );
+
+                                  if (response.statusCode == 200) {
+                                    // Successful login
+                                    final responseData = json.decode(response.body);
+                                    final token = responseData['token'];
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => NavBar()
+                                        ));
+                                  } else {
+                                    // Handle login failure
+                                    final errorMessage = json.decode(response.body)['message'];
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text(
+                                            'Login Failed',
+                                        style: TextStyle(
+                                          color: Colors.redAccent,
+                                        ),
+                                        ),
+                                        content: Text(
+                                            errorMessage,
+                                        style: TextStyle(
+                                          color: Colors.redAccent,
+                                        ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
                                 },
                               ),
                               UnderPart(
