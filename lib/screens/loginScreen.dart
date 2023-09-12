@@ -19,8 +19,35 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  switchListTile() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 40),
+    );
+  }
+
+  iconButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        RoundedIcon(imageUrl: "assets/images/facebook.png"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/google.jpg"),
+        SizedBox(
+          width: 20,
+        ),
+        RoundedIcon(imageUrl: "assets/images/github.png"),
+      ],
+    );
+  }
+
   Future<void> loginUser(String email, String password) async {
-    final url = 'http://16.171.14.68:5100/login.py';
+    final url = 'http://16.171.14.68:5100/login';
+
+    print('Sending to Server:');
+    print('Email: $email');
+    print('Password: $password');
 
     final response = await http.post(
       Uri.parse(url),
@@ -165,6 +192,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 // The rest of your functions (iconButton and switchListTile) remain unchanged
 }
