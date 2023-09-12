@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shopping_assistance_system/controller/controller.dart';
-import 'package:shopping_assistance_system/screens/promotions.dart';
-import 'package:shopping_assistance_system/screens/shop.dart';
-import 'package:shopping_assistance_system/screens/notification.dart';
-import 'package:shopping_assistance_system/screens/account.dart';
+import 'package:shopping_assistance_system/screens/promotionsScreen.dart';
+import 'package:shopping_assistance_system/screens/shopScreen.dart';
+import 'package:shopping_assistance_system/screens/notificationsScreen.dart';
+import 'package:shopping_assistance_system/screens/accountScreen.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -21,7 +21,7 @@ class _NavBarState extends State<NavBar> {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: const [Shop(), Notifications(), Promotions(), Account()],
+          children: const [ShopScreen(), NotificationsScreen(), PromotionsScreen(), AccountScreen()],
         ),
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.amber,
