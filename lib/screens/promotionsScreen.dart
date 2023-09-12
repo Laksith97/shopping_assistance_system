@@ -34,15 +34,18 @@ class PromotionsScreen extends StatefulWidget {
 
 class _PromotionsScreenState extends State<PromotionsScreen> {
   List<Promotion> promotions = [];
+  List<Promotion> filteredPromotions = [];
+  TextEditingController searchController = TextEditingController();
 
   Future<void> fetchPromotions() async {
     final response =
-        await http.get(Uri.parse('http://your-flask-backend-url/promotions'));
+        await http.get(Uri.parse('http://16.171.14.68:5000/promotions'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       setState(() {
         promotions =
             responseData.map((data) => Promotion.fromJson(data)).toList();
+        filteredPromotions = promotions;
       });
     } else {
       throw Exception('Failed to load promotions');
@@ -55,6 +58,19 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
     fetchPromotions();
   }
 
+  void filterPromotions(String query) {
+    setState(() {
+      filteredPromotions = promotions.where((promotion) {
+        final nameLower = promotion.name.toLowerCase();
+        final descriptionLower = promotion.description.toLowerCase();
+        final queryLower = query.toLowerCase();
+
+        return nameLower.contains(queryLower) ||
+            descriptionLower.contains(queryLower);
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,19 +79,39 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
         backgroundColor: Color(0xFF1DB274),
       ),
       backgroundColor: Colors.white,
-      body: promotions.isEmpty
-          ? ListView(
-              children: [
-                PromotionCard.placeholder(),
-                PromotionCard.placeholder(),
-              ],
-            )
-          : ListView.builder(
-              itemCount: promotions.length,
-              itemBuilder: (context, index) {
-                return PromotionCard(promotion: promotions[index]);
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                hintText: 'Search Promotions',
+                prefixIcon: Icon(Icons.search),
+              ),
+              onChanged: (query) {
+                filterPromotions(query);
               },
             ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount:
+                  filteredPromotions.length + 2, // +2 for default promotions.
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return PromotionCard.placeholder();
+                } else if (index == 1) {
+                  return PromotionCard.placeholder();
+                } else {
+                  return PromotionCard(
+                      promotion: filteredPromotions[index - 2]);
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -85,7 +121,6 @@ class PromotionCard extends StatelessWidget {
 
   PromotionCard({this.promotion});
 
-  // Create a placeholder card widget.
   static PromotionCard placeholder() {
     return PromotionCard(
       promotion: Promotion(
@@ -99,6 +134,10 @@ class PromotionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (promotion == null) {
+      return Container(); // Return an empty container for the placeholders.
+    }
+
     return Card(
       margin: EdgeInsets.all(16.0),
       elevation: 4.0,
@@ -107,7 +146,7 @@ class PromotionCard extends StatelessWidget {
         children: [
           Container(
             height: 200.0,
-            color: Colors.grey, // Change the color as desired.
+            color: Colors.grey,
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
