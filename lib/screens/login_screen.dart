@@ -5,7 +5,6 @@ import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
-import 'package:shopping_assistance_system/screens/shop.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -57,21 +56,10 @@ class LoginScreen extends StatelessWidget {
                         Form(
                           child: Column(
                             children: [
-                              const RoundedInputField(
+                              RoundedInputField(
                                   hintText: "Email", icon: Icons.email),
-                              const RoundedPasswordField(),
+                              RoundedPasswordField(),
                               switchListTile(),
-                              // RoundedButton(
-                              //   text: 'LOGIN',
-                              //   press: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               Home()), // Navigate to home screen
-                              //     );
-                              //   },
-                              // ),
                               RoundedButton(
                                 text: 'LOGIN',
                                 press: () {
@@ -139,6 +127,10 @@ iconButton(BuildContext context) {
         width: 20,
       ),
       RoundedIcon(imageUrl: "assets/images/google.jpg"),
+      SizedBox(
+        width: 20,
+      ),
+      RoundedIcon(imageUrl: "assets/images/github.png"),
     ],
   );
 }
