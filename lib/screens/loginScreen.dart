@@ -7,8 +7,7 @@ import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/LoginPassword.dart';
 import 'package:shopping_assistance_system/widgets/login_email.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
-import 'package:shopping_assistance_system/screens/resetScreen.dart';
-import 'package:http/http.dart' as http; // Import the http package for making HTTP requests
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
@@ -111,7 +110,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 press: () async {
                                   if (_formKey.currentState!.validate()) {
                                     String email = emailController.text.trim();
-                                    String password = passwordController.text.trim();
+                                    String password =
+                                        passwordController.text.trim();
 
                                     final response = await http.post(
                                       Uri.parse(url),
@@ -123,16 +123,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                     if (response.statusCode == 200) {
                                       // Successful login
-                                      final responseData = json.decode(response.body);
+                                      final responseData =
+                                          json.decode(response.body);
                                       final token = responseData['token'];
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => NavBar()
-                                          ));
+                                              builder: (context) => NavBar()));
                                     } else {
                                       // Handle login failure
-                                      final errorMessage = json.decode(response.body)['message'];
+                                      final errorMessage =
+                                          json.decode(response.body)['message'];
                                       showDialog(
                                         context: context,
                                         builder: (context) => AlertDialog(
@@ -170,29 +171,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const SignUpScreen()),
+                                            const SignUpScreen()),
                                   );
                                 },
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ResetScreen()),
-                                  );
-                                },
-                                child: const Text(
-                                  'Forgot password?',
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontFamily: 'OpenSans',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13),
-                                ),
+                              const Text(
+                                'Forgot password?',
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontFamily: 'OpenSans',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13),
                               ),
                               const SizedBox(
                                 height: 20,
@@ -211,5 +203,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-// The rest of your functions (iconButton and switchListTile) remain unchanged
 }
