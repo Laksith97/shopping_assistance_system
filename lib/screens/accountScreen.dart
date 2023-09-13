@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_assistance_system/screens/accountScreens/about.dart';
-import 'package:shopping_assistance_system/screens/accountScreens/help.dart';
-import 'package:shopping_assistance_system/screens/accountScreens/languageSupport.dart';
-import 'package:shopping_assistance_system/screens/accountScreens/previousOrders.dart';
+import 'package:shopping_assistance_system/screens/accountScreens/aboutScreen.dart';
+import 'package:shopping_assistance_system/screens/accountScreens/helpScreen.dart';
+import 'package:shopping_assistance_system/screens/accountScreens/languageSupportScreen.dart';
+import 'package:shopping_assistance_system/screens/accountScreens/previousOrdersScreen.dart';
 
 import 'loginScreen.dart';
 
@@ -14,8 +14,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final String userName = 'Supun Rathnayake';
-  final String userEmail = 'supun@gmail.com';
+  final String userName = 'The A Team';
+  final String userEmail = 'ateam@gmail.com';
   final String userImageUrl = 'https://example.com/user_image.jpg';
 
   @override
@@ -101,26 +101,26 @@ class _AccountScreenState extends State<AccountScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => previousOrders()),
+                              builder: (context) => PreviousOrdersScreen()),
                         );
                         break;
                       case 1:
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => about()),
+                          MaterialPageRoute(builder: (context) => AboutScreen()),
                         );
                         break;
                       case 2:
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => languageSupport()),
+                              builder: (context) => LanguageSupportScreen()),
                         );
                         break;
                       case 3:
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => help()),
+                          MaterialPageRoute(builder: (context) => ContactScreen()),
                         );
                         break;
                     }
@@ -140,16 +140,16 @@ class _AccountScreenState extends State<AccountScreen> {
         ],
       ),
     bottomNavigationBar: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: ElevatedButton(
-    onPressed: () {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (context) => LoginScreen(),
-    ));
-    },
-    child: Text('Logout'),
-    ),
-    ),
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+      ));
+        },
+      child: Text('Logout'),
+        ),
+      ),
     );
   }
 }
