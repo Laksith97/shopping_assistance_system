@@ -4,6 +4,8 @@ import 'package:shopping_assistance_system/screens/accountScreens/help.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/languageSupport.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/previousOrders.dart';
 
+import 'loginScreen.dart';
+
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -131,12 +133,27 @@ class _AccountScreenState extends State<AccountScreen> {
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),
+
                 );
               },
             ),
           ),
         ],
       ),
+    bottomNavigationBar: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: ElevatedButton(
+    onPressed: () {
+    // Implement the logout logic here
+    // For example, clear the user's session/token and navigate to the login screen
+    // Example using Navigator:
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    builder: (context) => LoginScreen(), // Replace LoginScreen with your actual login screen
+    ));
+    },
+    child: Text('Logout'),
+    ),
+    ),
     );
   }
 }
