@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/loginScreen.dart';
 import '../constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localization = AppLocalizations.of(context)!; // crreate instance
     return Material(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -26,10 +28,10 @@ class WelcomeScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 1.6,
                   decoration: BoxDecoration(
-                   // color: Color.fromARGB(255, 161, 243, 155),
-                    color:kPrimaryColor,
+                    // color: Color.fromARGB(255, 161, 243, 155),
+                    color: kPrimaryColor,
                     borderRadius:
-                        BorderRadius.only(bottomRight: Radius.circular(76)),
+                    BorderRadius.only(bottomRight: Radius.circular(76)),
                   ),
                   child: Center(
                     child: Image.asset(
@@ -46,8 +48,8 @@ class WelcomeScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 2.666,
                 decoration: BoxDecoration(
-                  color:kPrimaryColor,
-                 // color: Color.fromARGB(255, 161, 243, 155),
+                  color: kPrimaryColor,
+                  // color: Color.fromARGB(255, 161, 243, 155),
                 ),
               ),
             ),
@@ -66,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Shopping Revamped!",
+                      localization.shoppingRevamped,
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w600,
@@ -80,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: Text(
-                        "Shopping with Pleasure, \nWherever you are...",
+                        localization.shoppingDescription,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -92,8 +94,8 @@ class WelcomeScreen extends StatelessWidget {
                       height: 40,
                     ),
                     Material(
-                      color:kPrimaryColor,
-                     // color: Color.fromARGB(255, 141, 243, 105),
+                      color: kPrimaryColor,
+                      // color: Color.fromARGB(255, 141, 243, 105),
                       borderRadius: BorderRadius.circular(10),
                       child: InkWell(
                         onTap: () {
@@ -107,7 +109,7 @@ class WelcomeScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               vertical: 12, horizontal: 80),
                           child: Text(
-                            "Get Started",
+                            localization.getStarted,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shopping_assistance_system/classes/localeProvider.dart';
+import 'package:provider/provider.dart';
 
 class languageSupport extends StatefulWidget {
-  const languageSupport({super.key});
+  const languageSupport({Key? key}) : super(key: key);
 
   @override
-  State<languageSupport> createState() => _languageSupportState();
+  _LanguageSupportState createState() => _LanguageSupportState();
 }
 
-class _languageSupportState extends State<languageSupport> {
+class _LanguageSupportState extends State<languageSupport> {
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Language'),
@@ -17,7 +23,29 @@ class _languageSupportState extends State<languageSupport> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('Language'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppLocalizations.of(context)!
+                  .language, // Display the current language
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                localeProvider.changeLanguage(Locale('si'));
+              },
+              child: Text('Change to sinhala'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                localeProvider.changeLanguage(Locale('en'));
+              },
+              child: Text('Change to English'),
+            ),
+          ],
+        ),
       ),
     );
   }
