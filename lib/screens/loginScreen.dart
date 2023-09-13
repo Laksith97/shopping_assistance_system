@@ -3,6 +3,7 @@ import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/navbar/navbar.dart';
+import 'package:shopping_assistance_system/screens/resetScreen.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/LoginPassword.dart';
 import 'package:shopping_assistance_system/widgets/login_email.dart';
@@ -178,13 +179,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const Text(
-                                'Forgot password?',
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontFamily: 'OpenSans',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context, 
+                                      MaterialPageRoute(builder: (context) => ResetScreen()),
+                                  );
+                                },
+                                child: const Text(
+                                  'Forgot password?',
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13),
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,

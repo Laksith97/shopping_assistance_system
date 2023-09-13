@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/loginScreen.dart';
-
 import '../constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
