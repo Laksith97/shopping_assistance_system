@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class previousOrders extends StatefulWidget {
-  const previousOrders({super.key});
+class PreviousOrdersScreen extends StatefulWidget {
+  const PreviousOrdersScreen({super.key});
 
   @override
-  State<previousOrders> createState() => _previousOrdersState();
+  State<PreviousOrdersScreen> createState() => _PreviousOrdersScreenState();
 }
 
-class _previousOrdersState extends State<previousOrders> {
+class _PreviousOrdersScreenState extends State<PreviousOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,14 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopping_assistance_system/classes/localeProvider.dart';
 import 'package:provider/provider.dart';
 
-class languageSupport extends StatefulWidget {
-  const languageSupport({Key? key}) : super(key: key);
+class LanguageSupportScreen extends StatefulWidget {
+  const LanguageSupportScreen({Key? key}) : super(key: key);
 
   @override
   _LanguageSupportState createState() => _LanguageSupportState();
 }
 
-class _LanguageSupportState extends State<languageSupport> {
+class _LanguageSupportState extends State<LanguageSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
