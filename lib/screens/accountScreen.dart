@@ -13,7 +13,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   // Sample user data (replace with actual data from the database)
-  final String userName = 'Supun Perera';
+  final String userName = 'Supun Rathnayake';
   final String userEmail = 'supun@gmail.com';
   final String userImageUrl = 'https://example.com/user_image.jpg';
 
@@ -26,10 +26,8 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
       backgroundColor: Colors.white,
       body: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start, // Align user details to the left
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // User details section
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -38,35 +36,32 @@ class _AccountScreenState extends State<AccountScreen> {
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 241, 243, 245)
-                        .withOpacity(0.8), // Transparent blue color
+                    color: Color.fromARGB(255, 116, 214, 92).withOpacity(0.2),
                   ),
                   child: CircleAvatar(
-                    radius: 50, // Adjust the size of the user image
-                    backgroundImage:
-                        NetworkImage(userImageUrl), // User image URL
+                    radius: 50,
+                    backgroundImage: NetworkImage(userImageUrl),
                     child: Icon(
                       Icons.person, // Add an icon (e.g., person icon)
                       size: 50, // Adjust the icon size
                     ),
                   ),
                 ),
-                SizedBox(
-                    width: 16), // Add spacing between the avatar and details
+                SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        userName, // User name
+                        userName,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8), // Add spacing
+                      SizedBox(height: 8),
                       Text(
-                        userEmail, // User email
+                        userEmail,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
@@ -78,10 +73,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ],
             ),
           ),
-          // List of renamed cards with ">" icon
           Expanded(
             child: ListView.builder(
-              itemCount: 4, // Number of cards
+              itemCount: 4,
               itemBuilder: (context, index) {
                 String cardTitle = '';
                 switch (index) {
@@ -101,7 +95,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 return GestureDetector(
                   onTap: () {
-                    // Navigate to the corresponding page when a card is tapped
                     switch (index) {
                       case 0:
                         Navigator.push(
@@ -134,8 +127,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Card(
                     margin: EdgeInsets.all(8.0),
                     child: ListTile(
-                      title: Text(cardTitle), // Renamed card title
-                      trailing: Icon(Icons.arrow_forward), // ">" icon
+                      title: Text(cardTitle),
+                      trailing: Icon(Icons.arrow_forward),
                     ),
                   ),
                 );
