@@ -5,6 +5,10 @@
         android:label="shopping_assistance_system"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+         <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAnqJbQ5f30JoghcdVrbjI4677VfMOB_rI" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -63,14 +63,12 @@ class _CartScreenState extends State<CartScreen> {
                       itemCount: widget.cartItems.length,
                       itemBuilder: (context, index) {
                         final item = widget.cartItems[index];
-                        final itemCount =
-                            itemCountMap[item] ?? 0;
+                        final itemCount = itemCountMap[item] ?? 0;
 
                         return Card(
                           margin: EdgeInsets.all(8.0),
                           child: Padding(
-                            padding: EdgeInsets.all(
-                                12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: ListTile(
                               title: Text(
                                 item.name,
@@ -84,8 +82,7 @@ class _CartScreenState extends State<CartScreen> {
                                   Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors
-                                          .red,
+                                      color: Colors.red,
                                     ),
                                     child: IconButton(
                                       icon: Icon(Icons.remove),
@@ -111,8 +108,7 @@ class _CartScreenState extends State<CartScreen> {
                                   Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors
-                                          .green,
+                                      color: Colors.green,
                                     ),
                                     child: IconButton(
                                       icon: Icon(Icons.add),
@@ -153,8 +149,7 @@ class _CartScreenState extends State<CartScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => mapScreen()),
+                  MaterialPageRoute(builder: (context) => MapPage()),
                 );
               },
               child: Text('Search Path'),
