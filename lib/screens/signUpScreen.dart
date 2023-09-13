@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'package:get/get.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
-//import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/screens/screens.dart';
 import 'package:shopping_assistance_system/widgets/rounded_name_field.dart';
 import 'package:shopping_assistance_system/widgets/widgets.dart';
 
 import 'package:http/http.dart' as http;
 
-//import 'dart:convert';
 import 'dart:async';
 
 class SignUpScreen extends StatefulWidget {
@@ -128,12 +125,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       'Name Controller Value: ${nameController.text}');
                                   print(
                                       'Password Controller Value: ${passwordController.text}');
-
-                                  // Retrieve and trim values
-
-                                  // Register user
-
-                                  // Navigate to Login screen
                                 },
                               ),
                               const SizedBox(

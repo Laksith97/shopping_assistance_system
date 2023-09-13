@@ -12,15 +12,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // Map to track item counts in the cart
   final Map<Product, int> itemCountMap = {};
 
   @override
   void initState() {
     super.initState();
-    // Initialize item counts based on the items in the cart
     for (final item in widget.cartItems) {
-      itemCountMap[item] = 1; // Initial count is 1
+      itemCountMap[item] = 1;
     }
   }
 
@@ -66,18 +64,18 @@ class _CartScreenState extends State<CartScreen> {
                       itemBuilder: (context, index) {
                         final item = widget.cartItems[index];
                         final itemCount =
-                            itemCountMap[item] ?? 0; // Get item count
+                            itemCountMap[item] ?? 0;
 
                         return Card(
                           margin: EdgeInsets.all(8.0),
                           child: Padding(
                             padding: EdgeInsets.all(
-                                12.0), // Adjust padding as needed
+                                12.0),
                             child: ListTile(
                               title: Text(
                                 item.name,
                                 style: TextStyle(
-                                  fontSize: 16.0, // Increase text size
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -85,16 +83,15 @@ class _CartScreenState extends State<CartScreen> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle, // Circular shape
+                                      shape: BoxShape.circle,
                                       color: Colors
-                                          .red, // Set color for remove button
+                                          .red,
                                     ),
                                     child: IconButton(
                                       icon: Icon(Icons.remove),
-                                      color: Colors.white, // Text color
-                                      iconSize: 20.0, // Reduce button size
+                                      color: Colors.white,
+                                      iconSize: 20.0,
                                       onPressed: () {
-                                        // Decrease item count
                                         setState(() {
                                           if (itemCount > 1) {
                                             itemCountMap[item] = itemCount - 1;
@@ -103,26 +100,25 @@ class _CartScreenState extends State<CartScreen> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 10), // Add spacing
+                                  SizedBox(width: 10),
                                   Text(
                                     '$itemCount',
                                     style: TextStyle(
-                                      fontSize: 16.0, // Increase text size
+                                      fontSize: 16.0,
                                     ),
-                                  ), // Show item count
-                                  SizedBox(width: 10), // Add spacing
+                                  ),
+                                  SizedBox(width: 10),
                                   Container(
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle, // Circular shape
+                                      shape: BoxShape.circle,
                                       color: Colors
-                                          .green, // Set color for add button
+                                          .green,
                                     ),
                                     child: IconButton(
                                       icon: Icon(Icons.add),
-                                      color: Colors.white, // Text color
-                                      iconSize: 20.0, // Reduce button size
+                                      color: Colors.white,
+                                      iconSize: 20.0,
                                       onPressed: () {
-                                        // Increase item count
                                         setState(() {
                                           itemCountMap[item] = itemCount + 1;
                                         });
@@ -135,7 +131,6 @@ class _CartScreenState extends State<CartScreen> {
                                 icon: Icon(Icons.remove_circle),
                                 onPressed: () {
                                   setState(() {
-                                    // Remove item from cart when count is 0
                                     if (itemCount == 1) {
                                       widget.cartItems.remove(item);
                                       itemCountMap.remove(item);
@@ -156,11 +151,10 @@ class _CartScreenState extends State<CartScreen> {
             margin: EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
-                // Navigate to the MapScreen when the button is tapped
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => mapScreen()), // Use MapScreen
+                      builder: (context) => mapScreen()),
                 );
               },
               child: Text('Search Path'),

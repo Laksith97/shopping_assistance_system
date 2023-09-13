@@ -41,12 +41,10 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en'), // English
-        const Locale('si'), // Sinhala
-        // ... other locales the app supports
+        const Locale('en'),
+        const Locale('si'),
       ],
       locale: localeProvider.appLocale,
-      // ...
     );
   }
 }

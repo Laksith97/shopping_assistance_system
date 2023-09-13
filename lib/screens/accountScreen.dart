@@ -44,8 +44,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     radius: 50,
                     backgroundImage: NetworkImage(userImageUrl),
                     child: Icon(
-                      Icons.person, // Add an icon (e.g., person icon)
-                      size: 50, // Adjust the icon size
+                      Icons.person,
+                      size: 50,
                     ),
                   ),
                 ),
@@ -144,11 +144,8 @@ class _AccountScreenState extends State<AccountScreen> {
     padding: const EdgeInsets.all(16.0),
     child: ElevatedButton(
     onPressed: () {
-    // Implement the logout logic here
-    // For example, clear the user's session/token and navigate to the login screen
-    // Example using Navigator:
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (context) => LoginScreen(), // Replace LoginScreen with your actual login screen
+    builder: (context) => LoginScreen(),
     ));
     },
     child: Text('Logout'),

@@ -132,7 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                           MaterialPageRoute(
                                               builder: (context) => NavBar()));
                                     } else {
-                                      // Handle login failure
                                       final errorMessage =
                                           json.decode(response.body)['message'];
                                       showDialog(

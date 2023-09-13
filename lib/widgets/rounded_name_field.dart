@@ -5,20 +5,20 @@ import 'package:shopping_assistance_system/widgets/text_field_container.dart';
 class RoundedNameField extends StatelessWidget {
   final String? hintText;
   final IconData icon;
-  final TextEditingController? controller; // Add this line
+  final TextEditingController? controller;
 
   const RoundedNameField({
     Key? key,
     this.hintText,
     this.icon = Icons.person,
-    this.controller, // Add this line
+    this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        controller: controller, // Add this line
+        controller: controller,
         cursorColor: kPrimaryColor,
         validator: (value) {
           if (value == null || value.isEmpty) {

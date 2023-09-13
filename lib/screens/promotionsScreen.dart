@@ -97,7 +97,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
           Expanded(
             child: ListView.builder(
               itemCount:
-                  filteredPromotions.length + 2, // +2 for default promotions.
+                  filteredPromotions.length + 2,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return PromotionCard.placeholder();
@@ -135,7 +135,7 @@ class PromotionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (promotion == null) {
-      return Container(); // Return an empty container for the placeholders.
+      return Container();
     }
 
     return Card(

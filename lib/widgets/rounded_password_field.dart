@@ -3,10 +3,10 @@ import 'package:shopping_assistance_system/constants.dart';
 import 'package:shopping_assistance_system/widgets/text_field_container.dart';
 
 class RoundedPasswordField extends StatefulWidget {
-  final TextEditingController? controller; // Add this line
+  final TextEditingController? controller;
 
   const RoundedPasswordField({Key? key, this.controller})
-      : super(key: key); // Modify this line
+      : super(key: key);
 
   @override
   _RoundedPasswordFieldState createState() => _RoundedPasswordFieldState();
@@ -25,7 +25,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        controller: widget.controller, // Add this line
+        controller: widget.controller,
         obscureText: _obscureText,
         cursorColor: kPrimaryColor,
         validator: (value) {

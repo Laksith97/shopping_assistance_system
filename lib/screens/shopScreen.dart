@@ -25,7 +25,6 @@ class _ShopScreenState extends State<ShopScreen> {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              // Add your cart functionality here
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shopping_assistance_system/classes/localeProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,7 @@ class _LanguageSupportState extends State<languageSupport> {
           children: [
             Text(
               AppLocalizations.of(context)!
-                  .language, // Display the current language
+                  .language,
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(height: 20),

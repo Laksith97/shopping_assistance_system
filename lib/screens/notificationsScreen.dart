@@ -15,11 +15,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   ];
 
   Future<void> _refreshNotifications() async {
-    // Simulate fetching new notifications from an API or other data source.
-    await Future.delayed(Duration(seconds: 2)); // Simulating a delay.
+    await Future.delayed(Duration(seconds: 2));
 
     setState(() {
-      // Replace the notifications list with updated data.
       notifications = [
         'Updated Notification 1',
         'Updated Notification 2',
@@ -53,7 +51,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 );
               },
               child: Dismissible(
-                key: Key(notification), // Unique key for each notification
+                key: Key(notification),
                 onDismissed: (direction) {
                   setState(() {
                     notifications.removeAt(index);
