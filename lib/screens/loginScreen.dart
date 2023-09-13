@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => PasswordResetRequestScreen()),
+                                          builder: (context) => ResetScreen()),
                                   );
                                 },
                                 child: const Text(
