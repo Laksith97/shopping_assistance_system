@@ -14,7 +14,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  // Sample user data (replace with actual data from the database)
   final String userName = 'Supun Rathnayake';
   final String userEmail = 'supun@gmail.com';
   final String userImageUrl = 'https://example.com/user_image.jpg';
