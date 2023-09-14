@@ -42,11 +42,8 @@ class _ContactScreenState extends State<ContactScreen> {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                // Handle form submission here
                 String email = emailController.text;
                 String comment = commentController.text;
-                // Send data to the provided email (you will need an API for this)
-                // You can use packages like 'http' to make an API call to send data.
                 print('Email: $email, Comment: $comment');
               },
               child: Text('Submit'),
@@ -59,7 +56,6 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   void dispose() {
-    // Clean up the controllers when the widget is disposed
     emailController.dispose();
     commentController.dispose();
     super.dispose();
