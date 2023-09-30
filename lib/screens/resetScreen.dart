@@ -13,7 +13,7 @@ class _ResetScreenState extends State<ResetScreen> {
   final emailController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final String baseUrl = 'http://16.171.14.68:5300/reset';
+  String get baseUrl => 'http://16.171.14.68:5300/reset';
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _ResetScreenState extends State<ResetScreen> {
               onPressed: () async {
                 if (newPasswordController.text == confirmPasswordController.text) {
                   final response = await http.post(
-                    Uri.parse('$baseUrl/reset_password'),
+                    Uri.parse(baseUrl),
                     body: jsonEncode({
                       'email': emailController.text,
                       'new_password': newPasswordController.text
