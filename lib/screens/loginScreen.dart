@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
@@ -128,9 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                           json.decode(response.body);
                                       final token = responseData['token'];
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => NavBar()));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NavBar(
+                                            userEmail:
+                                                emailController.text.trim(),
+                                          ),
+                                        ),
+                                      );
+                                      // Get.to(
+                                      //   NavBar(
+                                      //       userEmail:
+                                      //           emailController.text.trim()),
+                                      // );
                                     } else {
                                       final errorMessage =
                                           json.decode(response.body)['message'];
@@ -181,8 +192,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               InkWell(
                                 onTap: () {
                                   Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(builder: (context) => ResetScreen()),
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResetScreen()),
                                   );
                                 },
                                 child: const Text(
