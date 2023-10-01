@@ -3,7 +3,9 @@ import 'package:shopping_assistance_system/screens/cartScreen.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
 
 class ShopScreen extends StatefulWidget {
-  const ShopScreen({Key? key}) : super(key: key);
+  final String userEmail; // To store the user's email
+
+  const ShopScreen({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   _ShopScreenState createState() => _ShopScreenState();
@@ -13,6 +15,14 @@ class _ShopScreenState extends State<ShopScreen> {
   TextEditingController searchController = TextEditingController();
   bool isSearchVisible = true;
   int tappedIndex = -1;
+  String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Extract the name part of the email address
+    userName = extractNameFromEmail(widget.userEmail);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +48,7 @@ class _ShopScreenState extends State<ShopScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text('\nWelcome, $userName!'), // Display the user's name
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
@@ -103,3 +114,16 @@ class _ShopScreenState extends State<ShopScreen> {
 }
 
 List<Product> cartItems = [];
+
+String extractNameFromEmail(String email) {
+  if (email.contains('@')) {
+    // Split the email address at the "@" symbol
+    List<String> parts = email.split('@');
+
+    // The first part (parts[0]) is the name
+    return parts[0];
+  } else {
+    // If the email doesn't contain "@", return the full email
+    return email;
+  }
+}

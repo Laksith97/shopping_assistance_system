@@ -8,20 +8,30 @@ import 'package:shopping_assistance_system/screens/notificationsScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreen.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  final String userEmail; // To store the user's email
+
+  const NavBar({Key? key, required this.userEmail}) : super(key: key);
 
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
   final controller = Get.put(NavBarController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NavBarController>(builder: (context) {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: const [ShopScreen(), NotificationsScreen(), PromotionsScreen(), AccountScreen()],
+          children: [
+            ShopScreen(
+              userEmail: widget.userEmail,
+            ),
+            NotificationsScreen(),
+            PromotionsScreen(),
+            AccountScreen()
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.amber,
