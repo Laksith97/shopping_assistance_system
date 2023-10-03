@@ -30,7 +30,9 @@ class _NavBarState extends State<NavBar> {
             ),
             NotificationsScreen(),
             PromotionsScreen(),
-            AccountScreen()
+            AccountScreen(
+              userEmail: widget.userEmail,
+            )
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

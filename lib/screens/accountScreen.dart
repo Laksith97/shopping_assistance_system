@@ -3,20 +3,31 @@ import 'package:shopping_assistance_system/screens/accountScreens/aboutScreen.da
 import 'package:shopping_assistance_system/screens/accountScreens/helpScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/languageSupportScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/previousOrdersScreen.dart';
+import 'package:shopping_assistance_system/screens/shopScreen.dart';
 
 import 'loginScreen.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  final String userEmail; // To store the user's email
+
+  const AccountScreen({super.key, required this.userEmail});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final String userName = 'The A Team';
-  final String userEmail = 'ateam@gmail.com';
+  String userName = '';
+  String userEmail = '';
   final String userImageUrl = 'https://example.com/user_image.jpg';
+
+  @override
+  void initState() {
+    super.initState();
+    // Extract the name part of the email address
+    userEmail = widget.userEmail;
+    userName = extractNameFromEmail(widget.userEmail);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +92,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 String cardTitle = '';
                 switch (index) {
                   case 0:
-                    cardTitle = 'Previous Orders';
+                    cardTitle = 'Previous Searches';
                     break;
                   case 1:
                     cardTitle = 'About Us';
@@ -107,7 +118,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       case 1:
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AboutScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => AboutScreen()),
                         );
                         break;
                       case 2:
@@ -120,7 +132,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       case 3:
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ContactScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => ContactScreen()),
                         );
                         break;
                     }
@@ -132,22 +145,21 @@ class _AccountScreenState extends State<AccountScreen> {
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),
-
                 );
               },
             ),
           ),
         ],
       ),
-    bottomNavigationBar: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-      ));
-        },
-      child: Text('Logout'),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => LoginScreen(),
+            ));
+          },
+          child: Text('Logout'),
         ),
       ),
     );
