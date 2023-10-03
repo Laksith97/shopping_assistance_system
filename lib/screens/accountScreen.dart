@@ -3,6 +3,7 @@ import 'package:shopping_assistance_system/screens/accountScreens/aboutScreen.da
 import 'package:shopping_assistance_system/screens/accountScreens/helpScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/languageSupportScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreens/previousOrdersScreen.dart';
+import 'package:shopping_assistance_system/screens/shopScreen.dart';
 
 import 'loginScreen.dart';
 
@@ -16,9 +17,17 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final String userName = 'The A Team';
-  final String userEmail = 55widget.userEmail;
+  String userName = '';
+  String userEmail = '';
   final String userImageUrl = 'https://example.com/user_image.jpg';
+
+  @override
+  void initState() {
+    super.initState();
+    // Extract the name part of the email address
+    userEmail = widget.userEmail;
+    userName = extractNameFromEmail(widget.userEmail);
+  }
 
   @override
   Widget build(BuildContext context) {

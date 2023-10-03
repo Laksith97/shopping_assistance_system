@@ -19,7 +19,11 @@ class AppPage {
             )),
     GetPage(name: notifications, page: () => const NotificationsScreen()),
     GetPage(name: promotions, page: () => const PromotionsScreen()),
-    GetPage(name: account, page: () => const AccountScreen())
+    GetPage(
+        name: account,
+        page: () => const AccountScreen(
+              userEmail: '',
+            ))
   ];
 
   static String navbar = '/';
