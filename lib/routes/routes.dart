@@ -7,8 +7,16 @@ import 'package:shopping_assistance_system/screens/accountScreen.dart';
 
 class AppPage {
   static List<GetPage> routes = [
-    GetPage(name: navbar, page: () => const NavBar(userEmail: '',)),
-    GetPage(name: shop, page: () => const ShopScreen(userEmail: '',)),
+    GetPage(
+        name: navbar,
+        page: () => const NavBar(
+              userEmail: '',
+            )),
+    GetPage(
+        name: shop,
+        page: () => const ShopScreen(
+              userEmail: '',
+            )),
     GetPage(name: notifications, page: () => const NotificationsScreen()),
     GetPage(name: promotions, page: () => const PromotionsScreen()),
     GetPage(name: account, page: () => const AccountScreen())
