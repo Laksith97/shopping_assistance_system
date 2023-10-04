@@ -13,7 +13,7 @@ class _ResetScreenState extends State<ResetScreen> {
   final emailController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  String get baseUrl => 'http://16.171.14.68:5300/reset';
+  String get baseUrl => 'http://43.205.254.104:5300/reset';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,8 @@ class _ResetScreenState extends State<ResetScreen> {
             ElevatedButton(
               child: Text('Submit Reset'),
               onPressed: () async {
-                if (newPasswordController.text == confirmPasswordController.text) {
+                if (newPasswordController.text ==
+                    confirmPasswordController.text) {
                   final response = await http.post(
                     Uri.parse(baseUrl),
                     body: jsonEncode({
@@ -53,13 +54,19 @@ class _ResetScreenState extends State<ResetScreen> {
                     headers: {'Content-Type': 'application/json'},
                   );
                   if (response.statusCode == 200) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password updated successfully. Please login again.')));
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Password updated successfully. Please login again.')));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating password. Please try again.')));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Error updating password. Please try again.')));
                   }
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Passwords do not match.')));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Passwords do not match.')));
                 }
               },
             ),

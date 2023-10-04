@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String get url => 'http://16.171.14.68:5101/login';
+  String get url => 'http://43.205.254.104:5101/login';
 
   switchListTile() {
     return Padding(
