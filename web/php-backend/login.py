@@ -28,7 +28,6 @@ def login():
         result = cursor.fetchone()
 
         if result:
-            # Here you'd ideally check the hashed password, but for simplicity we're checking the plaintext version
             if result[0] == password:
                 return jsonify({"status": "Success", "message": "Login successful"}), 200
             else:

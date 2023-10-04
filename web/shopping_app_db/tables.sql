@@ -1,8 +1,8 @@
 CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    User_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE product (
@@ -26,12 +26,12 @@ CREATE TABLE batch (
 );
 
 CREATE TABLE userSearchesproduct (
-    user_id INT,
+    User_id INT,
     product_id INT,
     searched_date DATE,
     searched_time TIME,
-    PRIMARY KEY (user_id, product_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    PRIMARY KEY (User_id, product_id),
+    FOREIGN KEY (User_id) REFERENCES users(User_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
 

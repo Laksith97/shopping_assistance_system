@@ -17,7 +17,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
@@ -108,7 +107,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   if (_formKey.currentState!.validate()) {
                                     String email = emailController.text.trim();
                                     String name = nameController.text.trim();
-                                    String password = passwordController.text.trim();
+                                    String password =
+                                        passwordController.text.trim();
 
                                     await registerUser(email, name, password);
 
@@ -160,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> registerUser(String email, String name, String password) async {
-    final url = 'http://16.171.14.68:5000/signup';
+    final url = 'http://43.205.254.104:5000/signup';
 
     print('Sending to Server:');
     print('Email: $email');

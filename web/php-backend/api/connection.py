@@ -16,7 +16,7 @@ try:
 
     print("Connection Successful!")
     
-    # ... Perform database operations here ...
+    
 
 except Exception as e:
     print(f"Connection Failed: {e}")

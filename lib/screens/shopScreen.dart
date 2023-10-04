@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/cartScreen.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ShopScreen extends StatefulWidget {
   final String userEmail; // To store the user's email
@@ -16,12 +18,36 @@ class _ShopScreenState extends State<ShopScreen> {
   bool isSearchVisible = true;
   int tappedIndex = -1;
   String userName = '';
+  List<String> recommendations = []; // Store product recommendations
 
   @override
   void initState() {
     super.initState();
     // Extract the name part of the email address
     userName = extractNameFromEmail(widget.userEmail);
+    getRecommendations(widget
+        .userEmail); // Fetch recommendations when the user enters the page
+  }
+
+  Future<void> getRecommendations(String userEmail) async {
+    final Uri uri = Uri.parse(
+        'http://43.205.254.104:5601/history_based_recommendation_model');
+    final Map<String, String> requestData = {'email': userEmail};
+
+    final response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(requestData),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        recommendations = List<String>.from(data['recommendations']);
+      });
+    } else {
+      print('Failed to fetch recommendations.');
+    }
   }
 
   @override
@@ -74,7 +100,8 @@ class _ShopScreenState extends State<ShopScreen> {
               SizedBox(
                 height: 150,
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount:
+                      recommendations.length, // Using recommendations count
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return AnimatedContainer(
@@ -96,7 +123,8 @@ class _ShopScreenState extends State<ShopScreen> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: Center(
-                            child: Text("Card $index"),
+                            child: Text(recommendations[
+                                index]), // Display recommendation
                           ),
                           color: Colors.green[700],
                         ),
