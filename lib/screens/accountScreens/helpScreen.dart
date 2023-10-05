@@ -40,6 +40,12 @@ class _ContactScreenState extends State<ContactScreen> {
               ),
             ),
             SizedBox(height: 16.0),
+            TextField(
+              //controller: emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
                 String email = emailController.text;
