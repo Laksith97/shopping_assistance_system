@@ -31,7 +31,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Future<void> getRecommendations(String userEmail) async {
     final Uri uri = Uri.parse(
-        'http://43.205.254.104:5601/history_based_recommendation_model');
+        'http://43.205.254.104:5650/history_based_recommendation_model');
     final Map<String, String> requestData = {'email': userEmail};
 
     final response = await http.post(
