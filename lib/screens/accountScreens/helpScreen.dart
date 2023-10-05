@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-class ContactScreen extends StatefulWidget {
-  const ContactScreen({Key? key});
+class ContactScreen extends StatelessWidget {
+  final _key = GlobalKey<FormState>();
+  TextEditingController subject = TextEditingController();
+  TextEditingController body = TextEditingController();
 
-  @override
-  _ContactScreenState createState() => _ContactScreenState();
-}
-class _ContactScreenState extends State<ContactScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController commentController = TextEditingController();
+  sendEmail(String subject, String body) async {
+    final Email email = Email(
+      body: body,
+      subject: subject,
+      recipients: ['ravindulakshanmail97@gmail.com'], // Specify the recipient email here
+      isHTML: false,
+    );
+    await FlutterEmailSender.send(email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,51 +25,43 @@ class _ContactScreenState extends State<ContactScreen> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
+        padding: const EdgeInsets.all(50.0),
+        child: Form(
+          key: _key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: TextFormField(
+                  controller: subject,
+                  decoration: InputDecoration(
+                    labelText: 'Subject',
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: commentController,
-              maxLines: 4,
-              decoration: InputDecoration(
-                labelText: 'Comment',
-                border: OutlineInputBorder(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: TextFormField(
+                  controller: body,
+                  decoration: InputDecoration(
+                    labelText: 'Body',
+                  ),
+                  maxLines: 4,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              //controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
+              ElevatedButton(
+                onPressed: () {
+                  _key.currentState!.save();
+                  sendEmail(subject.text, body.text);
+                },
+                child: Text('Submit'),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                String email = emailController.text;
-                String comment = commentController.text;
-                print('Email: $email, Comment: $comment');
-              },
-              child: Text('Submit'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    commentController.dispose();
-    super.dispose();
   }
 }
