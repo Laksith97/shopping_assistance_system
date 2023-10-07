@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shopping_assistance_system/screens/cartScreen.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +20,8 @@ class _ShopScreenState extends State<ShopScreen> {
   int tappedIndex = -1;
   String userName = '';
   List<String> recommendations = []; // Store product recommendations
+  List<String> searchResults = []; // Store search results
+  List<String> products = [];
 
   @override
   void initState() {
@@ -27,11 +30,19 @@ class _ShopScreenState extends State<ShopScreen> {
     userName = extractNameFromEmail(widget.userEmail);
     getRecommendations(widget
         .userEmail); // Fetch recommendations when the user enters the page
+    // Load products from the 'assets/products.txt' file
+    loadProducts();
+  }
+
+  Future<void> loadProducts() async {
+    final productsData = await rootBundle.loadString('assets/products.txt');
+    final lines = productsData.split('\n');
+    products = lines.map((line) => line.trim()).toList();
   }
 
   Future<void> getRecommendations(String userEmail) async {
     final Uri uri = Uri.parse(
-        'http://43.205.254.104:5650/history_based_recommendation_model');
+        'http://52.221.196.140:5650/history_based_recommendation_model');
     final Map<String, String> requestData = {'email': userEmail};
 
     final response = await http.post(
@@ -48,6 +59,30 @@ class _ShopScreenState extends State<ShopScreen> {
     } else {
       print('Failed to fetch recommendations.');
     }
+  }
+
+  void performSearch(String query) {
+    if (query.isEmpty) {
+      // If the search query is empty, clear the search results
+      searchResults.clear();
+    } else {
+      searchResults = products
+          .where(
+              (product) => product.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+
+      // Sort the search results based on relevance (how closely they match the query)
+      searchResults.sort((a, b) {
+        int relevanceA = a.toLowerCase().split(query.toLowerCase()).length;
+        int relevanceB = b.toLowerCase().split(query.toLowerCase()).length;
+        return relevanceB.compareTo(relevanceA);
+      });
+
+      // Limit the results to the top 5 suggestions
+      searchResults = searchResults.take(5).toList();
+    }
+
+    setState(() {});
   }
 
   @override
@@ -79,6 +114,9 @@ class _ShopScreenState extends State<ShopScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   controller: searchController,
+                  onChanged: (query) {
+                    performSearch(query);
+                  },
                   decoration: InputDecoration(
                       hintText: 'Search for product',
                       prefixIcon: Icon(Icons.search),
@@ -86,6 +124,40 @@ class _ShopScreenState extends State<ShopScreen> {
                           borderRadius: BorderRadius.circular(25.0))),
                 ),
               ),
+              if (searchResults.isNotEmpty)
+                Container(
+                  color: Colors
+                      .white, // Set the background color to a different color
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    children: searchResults
+                        .map(
+                          (result) => GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cartItems.add(
+                                  Product(name: result, price: 10.0),
+                                );
+                                searchController.clear();
+                                searchResults.clear();
+                              });
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Center(
+                                child: Text(result), // Display search result
+                              ),
+                              color: Colors.blue[
+                                  200], // Match the background color of recommended products
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+
               Align(
                 alignment: Alignment.topCenter,
                 child: Text(
@@ -93,7 +165,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF3153EB),
+                    color: Color.fromARGB(255, 25, 63, 230),
                   ),
                 ),
               ),
@@ -114,8 +186,8 @@ class _ShopScreenState extends State<ShopScreen> {
                         onTap: () {
                           setState(() {
                             tappedIndex = index;
-                            cartItems.add(
-                                Product(name: "Product $index", price: 10.0));
+                            cartItems.add(Product(
+                                name: recommendations[index], price: 10.0));
                           });
                         },
                         child: Card(
@@ -123,10 +195,14 @@ class _ShopScreenState extends State<ShopScreen> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: Center(
-                            child: Text(recommendations[
-                                index]), // Display recommendation
+                            child: Text(
+                              recommendations[index],
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ), // Display recommendation
                           ),
-                          color: Colors.green[700],
+                          color: Color.fromARGB(255, 103, 244, 173),
                         ),
                       ),
                     );
