@@ -54,5 +54,5 @@ def history_based_recommendation_model():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5601, debug=True)
+    app.run(host='0.0.0.0', port=5650, debug=True)
 
