@@ -147,12 +147,42 @@ class _CartScreenState extends State<CartScreen> {
             margin: EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MapPage()),
-                );
-              },
-              child: Text('Search Path'),
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Center(child: Text('Select Travel Mode')),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.drive_eta),
+                              title: Text('Driving'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MapPage()),
+                                );
+                                },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.directions_walk),
+                              title: Text('On Foot'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MapPage()),
+                                );},
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    );
+                },
+              child: Text('Select Travel Mode'),
             ),
           ),
         ],
