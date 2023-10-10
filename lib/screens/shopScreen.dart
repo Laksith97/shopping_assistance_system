@@ -5,6 +5,14 @@ import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
+class Category {
+  final String name;
+  final List<Product> products;
+
+  Category({required this.name, required this.products});
+}
+
 class ShopScreen extends StatefulWidget {
   final String userEmail; // To store the user's email
 
@@ -22,6 +30,76 @@ class _ShopScreenState extends State<ShopScreen> {
   List<String> recommendations = []; // Store product recommendations
   List<String> searchResults = []; // Store search results
   List<String> products = [];
+
+  List<Product> cartItems = [];
+
+  // Define categories and their products
+  List<Category> categories = [
+    Category(
+      name: 'Hand & Body Care',
+      products: [
+        Product(
+          name: 'Lux Soap',
+          price: 500.0,
+          imagePath: 'assets/images/lux_soap.png',
+        ),
+        Product(
+          name: 'Vaseline',
+          price: 1000.0,
+          imagePath: 'assets/images/vaseline.png',
+        ),
+        Product(
+          name: 'Handwash',
+          price: 1000.0,
+          imagePath: 'assets/images/dettol_handwash.png',
+        ),
+        // Add more products for this category with image paths
+      ],
+    ),
+    Category(
+      name: 'Diary Products',
+      products: [
+        Product(
+          name: 'Fresh Milk',
+          price: 20.0,
+          imagePath: 'assets/images/milk.png',
+        ),
+        Product(
+          name: 'Cheese',
+          price: 50.0,
+          imagePath: 'assets/images/cheese.png',
+        ),
+        Product(
+          name: 'Yoghurt',
+          price: 78.0,
+          imagePath: 'assets/images/yoghurt.png',
+        ),
+        // Add more products for this category with image paths
+      ],
+    ),
+    Category(
+      name: 'Vegetables',
+      products: [
+        Product(
+          name: 'Beans',
+          price: 20.0,
+          imagePath: 'assets/images/beans.png',
+        ),
+        Product(
+          name: 'Leeks',
+          price: 50.0,
+          imagePath: 'assets/images/leeks.png',
+        ),
+        Product(
+          name: 'Carrot',
+          price: 50.0,
+          imagePath: 'assets/images/carrot.png',
+        ),
+        // Add more products for this category with image paths
+      ],
+    ),
+    // Add more categories with their products and image paths
+  ];
 
   @override
   void initState() {
@@ -118,10 +196,12 @@ class _ShopScreenState extends State<ShopScreen> {
                     performSearch(query);
                   },
                   decoration: InputDecoration(
-                      hintText: 'Search for product',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0))),
+                    hintText: 'Search for product',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
                 ),
               ),
               if (searchResults.isNotEmpty)
@@ -133,27 +213,27 @@ class _ShopScreenState extends State<ShopScreen> {
                     children: searchResults
                         .map(
                           (result) => GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                cartItems.add(
-                                  Product(name: result, price: 10.0),
-                                );
-                                searchController.clear();
-                                searchResults.clear();
-                              });
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: Center(
-                                child: Text(result), // Display search result
-                              ),
-                              color: Colors.blue[
-                                  200], // Match the background color of recommended products
-                            ),
+                        onTap: () {
+                          setState(() {
+                            cartItems.add(
+                              Product(name: result, price: 10.0, imagePath: ''),
+                            );
+                            searchController.clear();
+                            searchResults.clear();
+                          });
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
-                        )
+                          child: Center(
+                            child: Text(result), // Display search result
+                          ),
+                          color: Colors.blue[
+                          200], // Match the background color of recommended products
+                        ),
+                      ),
+                    )
                         .toList(),
                   ),
                 ),
@@ -173,7 +253,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 height: 150,
                 child: ListView.builder(
                   itemCount:
-                      recommendations.length, // Using recommendations count
+                  recommendations.length, // Using recommendations count
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return AnimatedContainer(
@@ -187,7 +267,10 @@ class _ShopScreenState extends State<ShopScreen> {
                           setState(() {
                             tappedIndex = index;
                             cartItems.add(Product(
-                                name: recommendations[index], price: 10.0));
+                              name: recommendations[index],
+                              price: 10.0,
+                              imagePath: '',
+                            ));
                           });
                         },
                         child: Card(
@@ -209,6 +292,17 @@ class _ShopScreenState extends State<ShopScreen> {
                   },
                 ),
               ),
+
+              // Display category-wise product lists
+              for (var category in categories)
+                CategoryProductList(
+                  category: category,
+                  onAddToCart: (Product product) {
+                    setState(() {
+                      cartItems.add(product);
+                    });
+                  },
+                ),
             ],
           ),
         ),
@@ -217,7 +311,76 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 }
 
-List<Product> cartItems = [];
+class CategoryProductList extends StatelessWidget {
+  final Category category;
+  final Function(Product) onAddToCart;
+
+  CategoryProductList({required this.category, required this.onAddToCart});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Text(
+            category.name,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 25, 63, 230),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 150,
+          child: ListView.builder(
+            itemCount: category.products.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final product = category.products[index];
+              return AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                width: 120,
+                height: 120,
+                margin: EdgeInsets.all(10),
+                child: GestureDetector(
+                  onTap: () {
+                    onAddToCart(product);
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          product.imagePath, // Use the image path from the product
+                          width: 80, // Set the image width as needed
+                          height: 80, // Set the image height as needed
+                        ),
+                        SizedBox(height: 8), // Add some spacing between image and text
+                        Text(
+                          product.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    color: Color.fromARGB(255, 103, 244, 173),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 String extractNameFromEmail(String email) {
   if (email.contains('@')) {
@@ -231,3 +394,7 @@ String extractNameFromEmail(String email) {
     return email;
   }
 }
+
+void main() => runApp(MaterialApp(
+  home: ShopScreen(userEmail: "example@example.com"),
+));
