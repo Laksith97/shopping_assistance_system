@@ -23,6 +23,41 @@ class _ShopScreenState extends State<ShopScreen> {
   List<String> searchResults = []; // Store search results
   List<String> products = [];
 
+  List<Product> cartItems = [];
+
+  // Define categories and their products
+  List<Category> categories = [
+    Category(
+      name: 'Hand & Body Care',
+      products: [
+        Product(name: 'Lux Soap', price: 500.0),
+        Product(name: 'Vaseline', price: 1000.0),
+        Product(name: 'Dettol Handwash ', price: 1000.0),
+        // Add more products for this category
+      ],
+    ),
+    Category(
+      name: 'Diary Products',
+      products: [
+        Product(name: 'Fresh Milk', price: 20.0),
+        Product(name: 'Cheese', price: 50.0),
+        Product(name: 'Yoghurt' , price: 78.0)
+        // Add more products for this category
+      ],
+    ),
+
+    Category(
+      name: 'Vegetables',
+      products: [
+        Product(name: 'Beans', price: 20.0),
+        Product(name: 'Leaks', price: 50.0),
+        Product(name: 'Carrot', price: 50.0),
+        // Add more products for this category
+      ],
+    ),
+    // Add more categories with their products
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -133,27 +168,27 @@ class _ShopScreenState extends State<ShopScreen> {
                     children: searchResults
                         .map(
                           (result) => GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                cartItems.add(
-                                  Product(name: result, price: 10.0),
-                                );
-                                searchController.clear();
-                                searchResults.clear();
-                              });
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: Center(
-                                child: Text(result), // Display search result
-                              ),
-                              color: Colors.blue[
-                                  200], // Match the background color of recommended products
-                            ),
+                        onTap: () {
+                          setState(() {
+                            cartItems.add(
+                              Product(name: result, price: 10.0),
+                            );
+                            searchController.clear();
+                            searchResults.clear();
+                          });
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
-                        )
+                          child: Center(
+                            child: Text(result), // Display search result
+                          ),
+                          color: Colors.blue[
+                          200], // Match the background color of recommended products
+                        ),
+                      ),
+                    )
                         .toList(),
                   ),
                 ),
@@ -173,7 +208,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 height: 150,
                 child: ListView.builder(
                   itemCount:
-                      recommendations.length, // Using recommendations count
+                  recommendations.length, // Using recommendations count
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return AnimatedContainer(
@@ -209,6 +244,17 @@ class _ShopScreenState extends State<ShopScreen> {
                   },
                 ),
               ),
+
+              // Display category-wise product lists
+              for (var category in categories)
+                CategoryProductList(
+                  category: category,
+                  onAddToCart: (Product product) {
+                    setState(() {
+                      cartItems.add(product);
+                    });
+                  },
+                ),
             ],
           ),
         ),
@@ -217,7 +263,75 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 }
 
-List<Product> cartItems = [];
+class CategoryProductList extends StatelessWidget {
+  final Category category;
+  final Function(Product) onAddToCart;
+
+  CategoryProductList({required this.category, required this.onAddToCart});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Text(
+            category.name,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 25, 63, 230),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 150,
+          child: ListView.builder(
+            itemCount: category.products.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final product = category.products[index];
+              return AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                width: 120,
+                height: 120,
+                margin: EdgeInsets.all(10),
+                child: GestureDetector(
+                  onTap: () {
+                    onAddToCart(product);
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        product.name,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    color: Color.fromARGB(255, 103, 244, 173),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class Category {
+  final String name;
+  final List<Product> products;
+
+  Category({required this.name, required this.products});
+}
+
 
 String extractNameFromEmail(String email) {
   if (email.contains('@')) {
