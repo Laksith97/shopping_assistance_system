@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:shopping_assistance_system/screens/mapScreen.dart';
+import 'package:shopping_assistance_system/screens/shopInfoScreen.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
@@ -151,7 +152,7 @@ class _CartScreenState extends State<CartScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Center(child: Text('Select Travel Mode')),
+                        title: Text('Select Travel Mode'),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -162,7 +163,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MapPage()),
+                                  MaterialPageRoute(builder: (context) => ShopInfoScreen(shopInfo: {},)),
                                 );
                                 },
                             ),
@@ -173,7 +174,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MapPage()),
+                                  MaterialPageRoute(builder: (context) => ShopInfoScreen(shopInfo: {},)),
                                 );},
                             ),
                           ],
