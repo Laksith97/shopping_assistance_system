@@ -2,26 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shopping_assistance_system/screens/productScreen.dart';
+
 class ShopInfoScreen extends StatefulWidget {
   final Map<String, dynamic> shopInfo;
+  final List<Product> cartItems;
+  final String selectedTravelMode;
 
-  ShopInfoScreen({required this.shopInfo});
+  ShopInfoScreen(
+      {required this.shopInfo,
+      required this.cartItems,
+      required this.selectedTravelMode});
 
   @override
   _ShopInfoScreenState createState() => _ShopInfoScreenState();
 }
 
 class _ShopInfoScreenState extends State<ShopInfoScreen> {
-  Map<String, dynamic> _shopInfo = {};
+  List<Map<String, dynamic>> _shopInfoList = [];
+
+  Future<void> _loadShopInfo() async {
+    final List<Product> cartItems = widget.cartItems;
+    final double userLatitude = 8.3531; // Actual user latitude
+    final double userLongitude = 80.5022; // Actual user longitude
+    final String selectedTravelMode = widget.selectedTravelMode;
+
+    final response = await ShopInfoLoader().fetchShopInfo(
+        userLatitude,
+        userLongitude,
+        cartItems.map((item) => item.name).toList(),
+        selectedTravelMode);
+
+    setState(() {
+      _shopInfoList = response;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    ShopInfoLoader().fetchShopInfo().then((shopInfo) {
-      setState(() {
-        _shopInfo = shopInfo;
-      });
-    });
+    _loadShopInfo();
   }
 
   @override
@@ -32,14 +52,21 @@ class _ShopInfoScreenState extends State<ShopInfoScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Shop Name: ${_shopInfo['Shop Name']}'),
-            Text('Distance: ${_shopInfo['Distance']}'),
-            Text('Number of Available Items: ${_shopInfo['Number of Available Items']}'),
-            // Add more Text widgets for other details...
-          ],
+        child: ListView.builder(
+          itemCount: _shopInfoList.length,
+          itemBuilder: (context, index) {
+            final shopInfo = _shopInfoList[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Shop Name: ${shopInfo['Shop Name'] ?? 'Loading...'}'),
+                Text('Distance: ${shopInfo['Distance'] ?? 'Loading...'}'),
+                Text(
+                    'Number of Available Items: ${shopInfo['Number of Available Items'] ?? 'Loading...'}'),
+                // Add more Text widgets for other details...
+              ],
+            );
+          },
         ),
       ),
     );
@@ -47,25 +74,27 @@ class _ShopInfoScreenState extends State<ShopInfoScreen> {
 }
 
 class ShopInfoLoader {
-  Future<Map<String, dynamic>> fetchShopInfo() async {
+  Future<List<Map<String, dynamic>>> fetchShopInfo(double userLatitude,
+      double userLongitude, List<String> itemNames, String travelMode) async {
     final response = await http.post(
-      'http://18.142.249.120:5000/optimizing_model.py' as Uri,
+      // Replace with your server's URL
+      Uri.parse('http://18.142.249.120:5000/optimizing_model'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'user_latitude': 8.3608, // Replace with actual user latitude
-        'user_longitude': 80.5033, // Replace with actual user longitude
-        'item_list': ['Nice', 'Cream Cracker'], // Replace with actual item list
-        'travel_mode': 'walking', // Replace with actual travel mode
+        'user_latitude': userLatitude,
+        'user_longitude': userLongitude,
+        'item_list': itemNames,
+        'travel_mode': travelMode,
       }),
     );
 
     if (response.statusCode == 200) {
-      // If server returns a 200 OK response, parse the JSON
-      return json.decode(response.body);
+      final List<Map<String, dynamic>> responseData =
+          List<Map<String, dynamic>>.from(json.decode(response.body));
+      return responseData;
     } else {
-      // If the server did not return a 200 OK response, throw an exception.
       throw Exception('Failed to load shop info');
     }
   }

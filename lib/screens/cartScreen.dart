@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:shopping_assistance_system/screens/mapScreen.dart';
 import 'package:shopping_assistance_system/screens/shopInfoScreen.dart';
+import 'package:shopping_assistance_system/screens/shopScreen.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
@@ -14,6 +15,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final Map<Product, int> itemCountMap = {};
+  String selectedTravelMode = "";
 
   @override
   void initState() {
@@ -160,29 +162,51 @@ class _CartScreenState extends State<CartScreen> {
                               leading: Icon(Icons.drive_eta),
                               title: Text('Driving'),
                               onTap: () {
+                                setState(() {
+                                  selectedTravelMode =
+                                      'driving'; // Store the selected mode
+                                });
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ShopInfoScreen(shopInfo: {},)),
+                                  MaterialPageRoute(
+                                      builder: (context) => ShopInfoScreen(
+                                            shopInfo: {},
+                                            cartItems: widget
+                                                .cartItems, // Pass cartItems
+                                            selectedTravelMode:
+                                                selectedTravelMode, // Pass selectedTravelMode
+                                          )),
                                 );
-                                },
+                              },
                             ),
                             ListTile(
                               leading: Icon(Icons.directions_walk),
                               title: Text('On Foot'),
                               onTap: () {
+                                setState(() {
+                                  selectedTravelMode =
+                                      'walking'; // Store the selected mode
+                                });
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ShopInfoScreen(shopInfo: {},)),
-                                );},
+                                  MaterialPageRoute(
+                                      builder: (context) => ShopInfoScreen(
+                                            shopInfo: {},
+                                            cartItems: widget
+                                                .cartItems, // Pass cartItems
+                                            selectedTravelMode:
+                                                selectedTravelMode, // Pass selectedTravelMode
+                                          )),
+                                );
+                              },
                             ),
                           ],
                         ),
                       );
-                    }
-                    );
-                },
+                    });
+              },
               child: Text('Select Travel Mode'),
             ),
           ),
