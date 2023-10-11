@@ -49,19 +49,22 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'About Our Shopping App Developers',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                      shadows: [
-                        Shadow(
-                          blurRadius:3,
-                          color: Colors.black87,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
+                  Center(
+                    child: Text(
+                      'Developers Behind the Shopping App',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1DB274),
+                        shadows: [
+                          Shadow(
+                            blurRadius:3,
+                            color: Colors.black87,
+                            offset: Offset(3, 2),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -90,7 +93,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Laksith Ratnayake, Malinda Senavirathna, Ravindu Godage, Yohan Perera, Chamod Senarathna,",
+                    "Laksith Ratnayake\nMalinda Senavirathna\nRavindu Godage\nYohan Perera\nChamod Senarathna",
+                    textAlign: TextAlign.center,
                   ),
                   Divider(
                     color: Colors.grey,
