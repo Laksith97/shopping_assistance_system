@@ -18,7 +18,7 @@ class AppPage {
               userEmail: '',
             )),
     GetPage(name: notifications, page: () => const NotificationsScreen()),
-    GetPage(name: promotions, page: () => const PromotionsScreen()),
+    GetPage(name: promotions, page: () =>  CheckPromotionScreen()),
     GetPage(
         name: account,
         page: () => const AccountScreen(

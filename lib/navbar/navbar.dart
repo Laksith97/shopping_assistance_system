@@ -29,7 +29,7 @@ class _NavBarState extends State<NavBar> {
               userEmail: widget.userEmail,
             ),
             NotificationsScreen(),
-            PromotionsScreen(),
+            CheckPromotionScreen(),
             AccountScreen(
               userEmail: widget.userEmail,
             )

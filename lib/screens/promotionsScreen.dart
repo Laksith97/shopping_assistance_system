@@ -1,174 +1,79 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class Promotion {
-  final int id;
-  final String name;
-  final String description;
-  final String imageUrl;
-
-  Promotion({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.imageUrl,
-  });
-
-  factory Promotion.fromJson(Map<String, dynamic> json) {
-    return Promotion(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      imageUrl: json['image_url'],
-    );
-  }
-}
-
-class PromotionsScreen extends StatefulWidget {
-  const PromotionsScreen({super.key});
-
+class CheckPromotionScreen extends StatefulWidget {
   @override
-  State<PromotionsScreen> createState() => _PromotionsScreenState();
+  _CheckPromotionScreenState createState() => _CheckPromotionScreenState();
 }
 
-class _PromotionsScreenState extends State<PromotionsScreen> {
-  List<Promotion> promotions = [];
-  List<Promotion> filteredPromotions = [];
-  TextEditingController searchController = TextEditingController();
+class _CheckPromotionScreenState extends State<CheckPromotionScreen> {
+  TextEditingController _controller = TextEditingController();
+  String _statusMessage = '';
+  String _serverUrl = 'http://52.221.196.140:5599/get_promotion1';
 
-  Future<void> fetchPromotions() async {
-    final response =
-        await http.get(Uri.parse('http://16.171.14.68:5000/promotions'));
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = json.decode(response.body);
+  void _checkPromotion() async {
+    final item = _controller.text;
+    if (item.isEmpty) {
       setState(() {
-        promotions =
-            responseData.map((data) => Promotion.fromJson(data)).toList();
-        filteredPromotions = promotions;
+        _statusMessage = 'Please enter an item name';
       });
-    } else {
-      throw Exception('Failed to load promotions');
+      return;
     }
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchPromotions();
-  }
+    try {
+      final response = await http.post(
+        Uri.parse(_serverUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'Item_Name': item}),
+      );
 
-  void filterPromotions(String query) {
-    setState(() {
-      filteredPromotions = promotions.where((promotion) {
-        final nameLower = promotion.name.toLowerCase();
-        final descriptionLower = promotion.description.toLowerCase();
-        final queryLower = query.toLowerCase();
-
-        return nameLower.contains(queryLower) ||
-            descriptionLower.contains(queryLower);
-      }).toList();
-    });
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          _statusMessage = data['message'];
+        });
+      } else {
+        setState(() {
+          _statusMessage = 'No Promotions for '+item;
+        });
+      }
+    } catch (error) {
+      setState(() {
+        _statusMessage = 'Error: $error';
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Promotions'),
-        backgroundColor: Color(0xFF1DB274),
+        title: Text('Check Promotion'),
       ),
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: searchController,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller,
               decoration: InputDecoration(
-                hintText: 'Search Promotions',
-                prefixIcon: Icon(Icons.search),
+                labelText: 'Item Name',
+                border: OutlineInputBorder(),
               ),
-              onChanged: (query) {
-                filterPromotions(query);
-              },
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount:
-                  filteredPromotions.length + 2,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return PromotionCard.placeholder();
-                } else if (index == 1) {
-                  return PromotionCard.placeholder();
-                } else {
-                  return PromotionCard(
-                      promotion: filteredPromotions[index - 2]);
-                }
-              },
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _checkPromotion,
+              child: Text('Check Promotion'),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PromotionCard extends StatelessWidget {
-  final Promotion? promotion;
-
-  PromotionCard({this.promotion});
-
-  static PromotionCard placeholder() {
-    return PromotionCard(
-      promotion: Promotion(
-        id: 0,
-        name: 'Example Promotion',
-        description: 'This is an example promotion card.',
-        imageUrl: '',
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (promotion == null) {
-      return Container();
-    }
-
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      elevation: 4.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 200.0,
-            color: Colors.grey,
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  promotion?.name ?? 'Promotion Name',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                Text(
-                  promotion?.description ?? 'Promotion Description',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ],
-            ),
-          ),
-        ],
+            SizedBox(height: 100),
+            Text(_statusMessage,
+            style: TextStyle(fontWeight: FontWeight.bold,
+            fontSize: 24.0,
+            )),
+          ],
+        ),
       ),
     );
   }
