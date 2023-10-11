@@ -21,7 +21,7 @@ class _AboutScreenState extends State<AboutScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFC2E9FB), Colors.white],
+            colors: [Color(0x769CC0AB), Colors.white],
           ),
         ),
         child: ListView(
@@ -49,22 +49,19 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Center(
-                    child: Text(
-                      'Developers Behind the Shopping App',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1DB274),
-                        shadows: [
-                          Shadow(
-                            blurRadius:3,
-                            color: Colors.black87,
-                            offset: Offset(3, 2),
-                          ),
-                        ],
-                      ),
+                  Text(
+                    'About Our Shopping App Developers',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                      shadows: [
+                        Shadow(
+                          blurRadius:3,
+                          color: Colors.black87,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
@@ -93,8 +90,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Laksith Ratnayake\nMalinda Senavirathna\nRavindu Godage\nYohan Perera\nChamod Senarathna",
-                    textAlign: TextAlign.center,
+                    "Laksith Ratnayake, Malinda Senavirathna, Ravindu Godage, Yohan Perera, Chamod Senarathna,",
                   ),
                   Divider(
                     color: Colors.grey,
