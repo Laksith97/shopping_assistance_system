@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shopping_assistance_system/screens/mapScreen.dart';
 import 'dart:convert';
 
 import 'package:shopping_assistance_system/screens/productScreen.dart';
@@ -69,6 +70,17 @@ class _ShopInfoScreenState extends State<ShopInfoScreen> {
           },
         ),
       ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => MapPage(),
+              ));
+            },
+            child: Text('Search Path'),
+          ),
+        ),
     );
   }
 }
