@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key});
 
@@ -33,10 +31,7 @@ class _AboutScreenState extends State<AboutScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/developer_image.jpg',
-                    width: 300,
-                    height: 300,
+                  Container(
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -47,6 +42,11 @@ class _AboutScreenState extends State<AboutScreen> {
                         ),
                       ],
                     ),
+                    child: Image.asset(
+                      'assets/images/developer_image.jpg',
+                      width: 300,
+                      height: 200,
+                    ),
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -54,11 +54,11 @@ class _AboutScreenState extends State<AboutScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Colors.green,
                       shadows: [
                         Shadow(
-                          blurRadius: 5,
-                          color: Colors.grey,
+                          blurRadius:3,
+                          color: Colors.black87,
                           offset: Offset(2, 2),
                         ),
                       ],
