@@ -5,13 +5,14 @@ import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class Category {
   final String name;
   final List<Product> products;
 
   Category({required this.name, required this.products});
 }
+Color myGrayColor = Color.fromARGB(255, 191, 191, 191);
+
 
 class ShopScreen extends StatefulWidget {
   final String userEmail; // To store the user's email
@@ -42,16 +43,19 @@ class _ShopScreenState extends State<ShopScreen> {
           name: 'Lux Soap',
           price: 500.0,
           imagePath: 'assets/images/lux_soap.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Vaseline',
           price: 1000.0,
           imagePath: 'assets/images/vaseline.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Handwash',
           price: 1000.0,
           imagePath: 'assets/images/dettol_handwash.png',
+          color: myGrayColor, // 25% gray color
         ),
         // Add more products for this category with image paths
       ],
@@ -63,16 +67,19 @@ class _ShopScreenState extends State<ShopScreen> {
           name: 'Fresh Milk',
           price: 20.0,
           imagePath: 'assets/images/milk.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Cheese',
           price: 50.0,
           imagePath: 'assets/images/cheese.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Yoghurt',
           price: 78.0,
           imagePath: 'assets/images/yoghurt.png',
+          color: myGrayColor, // 25% gray color
         ),
         // Add more products for this category with image paths
       ],
@@ -84,21 +91,24 @@ class _ShopScreenState extends State<ShopScreen> {
           name: 'Beans',
           price: 20.0,
           imagePath: 'assets/images/beans.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Leeks',
           price: 50.0,
           imagePath: 'assets/images/leeks.png',
+          color: myGrayColor, // 25% gray color
         ),
         Product(
           name: 'Carrot',
           price: 50.0,
           imagePath: 'assets/images/carrot.png',
+          color: myGrayColor, // 25% gray color
         ),
         // Add more products for this category with image paths
       ],
     ),
-    // Add more categories with their products and image paths
+    // Add more categories with products and colors
   ];
 
   @override
@@ -106,8 +116,7 @@ class _ShopScreenState extends State<ShopScreen> {
     super.initState();
     // Extract the name part of the email address
     userName = extractNameFromEmail(widget.userEmail);
-    getRecommendations(widget
-        .userEmail); // Fetch recommendations when the user enters the page
+    getRecommendations(widget.userEmail); // Fetch recommendations when the user enters the page
     // Load products from the 'assets/products.txt' file
     loadProducts();
   }
@@ -119,8 +128,7 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> getRecommendations(String userEmail) async {
-    final Uri uri = Uri.parse(
-        'http://52.221.196.140:5650/history_based_recommendation_model');
+    final Uri uri = Uri.parse('http://52.221.196.140:5650/history_based_recommendation_model');
     final Map<String, String> requestData = {'email': userEmail};
 
     final response = await http.post(
@@ -145,8 +153,7 @@ class _ShopScreenState extends State<ShopScreen> {
       searchResults.clear();
     } else {
       searchResults = products
-          .where(
-              (product) => product.toLowerCase().contains(query.toLowerCase()))
+          .where((product) => product.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
       // Sort the search results based on relevance (how closely they match the query)
@@ -176,8 +183,7 @@ class _ShopScreenState extends State<ShopScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => CartScreen(cartItems: cartItems)),
+                MaterialPageRoute(builder: (context) => CartScreen(cartItems: cartItems)),
               );
             },
           ),
@@ -206,8 +212,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               if (searchResults.isNotEmpty)
                 Container(
-                  color: Colors
-                      .white, // Set the background color to a different color
+                  color: Colors.white, // Set the background color to a different color
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: searchResults
@@ -216,7 +221,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         onTap: () {
                           setState(() {
                             cartItems.add(
-                              Product(name: result, price: 10.0, imagePath: ''),
+                              Product(name: result, price: 10.0, imagePath: '', color: myGrayColor),
                             );
                             searchController.clear();
                             searchResults.clear();
@@ -229,8 +234,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           child: Center(
                             child: Text(result), // Display search result
                           ),
-                          color: Colors.blue[
-                          200], // Match the background color of recommended products
+                          color: Colors.blue[200], // Match the background color of recommended products
                         ),
                       ),
                     )
@@ -252,8 +256,7 @@ class _ShopScreenState extends State<ShopScreen> {
               SizedBox(
                 height: 150,
                 child: ListView.builder(
-                  itemCount:
-                  recommendations.length, // Using recommendations count
+                  itemCount: recommendations.length, // Using recommendations count
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return AnimatedContainer(
@@ -266,16 +269,14 @@ class _ShopScreenState extends State<ShopScreen> {
                         onTap: () {
                           setState(() {
                             tappedIndex = index;
-                            cartItems.add(Product(
-                              name: recommendations[index],
-                              price: 10.0,
-                              imagePath: '',
+                            cartItems.add(
+                              Product(name: recommendations[index], price: 10.0, imagePath: '', color: myGrayColor,
                             ));
                           });
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(17.0),
                           ),
                           child: Center(
                             child: Text(
@@ -285,7 +286,7 @@ class _ShopScreenState extends State<ShopScreen> {
                               ),
                             ), // Display recommendation
                           ),
-                          color: Color.fromARGB(255, 103, 244, 173),
+                          color: Color.fromARGB(255, 241, 212, 215),
                         ),
                       ),
                     );
@@ -370,7 +371,7 @@ class CategoryProductList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    color: Color.fromARGB(255, 103, 244, 173),
+                    color: product.color, // Use the color defined in the product
                   ),
                 ),
               );
