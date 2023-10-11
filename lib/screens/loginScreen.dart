@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shopping_assistance_system/components/components.dart';
 import 'package:shopping_assistance_system/components/under_part.dart';
 import 'package:shopping_assistance_system/constants.dart';
@@ -25,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String get url => 'http://43.205.254.104:5101/login';
+  String get url => 'http://43.205.254.104:5222/login1';
 
   switchListTile() {
     return Padding(
