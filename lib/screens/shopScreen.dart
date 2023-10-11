@@ -11,8 +11,8 @@ class Category {
 
   Category({required this.name, required this.products});
 }
-Color myGrayColor = Color.fromARGB(255, 191, 191, 191);
 
+Color myGrayColor = Color.fromARGB(255, 191, 191, 191);
 
 class ShopScreen extends StatefulWidget {
   final String userEmail; // To store the user's email
@@ -116,7 +116,8 @@ class _ShopScreenState extends State<ShopScreen> {
     super.initState();
     // Extract the name part of the email address
     userName = extractNameFromEmail(widget.userEmail);
-    getRecommendations(widget.userEmail); // Fetch recommendations when the user enters the page
+    getRecommendations(widget
+        .userEmail); // Fetch recommendations when the user enters the page
     // Load products from the 'assets/products.txt' file
     loadProducts();
   }
@@ -128,7 +129,8 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> getRecommendations(String userEmail) async {
-    final Uri uri = Uri.parse('http://52.221.196.140:5650/history_based_recommendation_model');
+    final Uri uri = Uri.parse(
+        'http://52.221.196.140:5650/history_based_recommendation_model');
     final Map<String, String> requestData = {'email': userEmail};
 
     final response = await http.post(
@@ -153,7 +155,8 @@ class _ShopScreenState extends State<ShopScreen> {
       searchResults.clear();
     } else {
       searchResults = products
-          .where((product) => product.toLowerCase().contains(query.toLowerCase()))
+          .where(
+              (product) => product.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
       // Sort the search results based on relevance (how closely they match the query)
@@ -183,7 +186,11 @@ class _ShopScreenState extends State<ShopScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartScreen(cartItems: cartItems)),
+                MaterialPageRoute(
+                    builder: (context) => CartScreen(
+                          cartItems: cartItems,
+                          userEmail: widget.userEmail,
+                        )),
               );
             },
           ),
@@ -212,32 +219,38 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               if (searchResults.isNotEmpty)
                 Container(
-                  color: Colors.white, // Set the background color to a different color
+                  color: Colors
+                      .white, // Set the background color to a different color
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: searchResults
                         .map(
                           (result) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            cartItems.add(
-                              Product(name: result, price: 10.0, imagePath: '', color: myGrayColor),
-                            );
-                            searchController.clear();
-                            searchResults.clear();
-                          });
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            onTap: () {
+                              setState(() {
+                                cartItems.add(
+                                  Product(
+                                      name: result,
+                                      price: 10.0,
+                                      imagePath: '',
+                                      color: myGrayColor),
+                                );
+                                searchController.clear();
+                                searchResults.clear();
+                              });
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Center(
+                                child: Text(result), // Display search result
+                              ),
+                              color: Colors.blue[
+                                  200], // Match the background color of recommended products
+                            ),
                           ),
-                          child: Center(
-                            child: Text(result), // Display search result
-                          ),
-                          color: Colors.blue[200], // Match the background color of recommended products
-                        ),
-                      ),
-                    )
+                        )
                         .toList(),
                   ),
                 ),
@@ -256,7 +269,8 @@ class _ShopScreenState extends State<ShopScreen> {
               SizedBox(
                 height: 150,
                 child: ListView.builder(
-                  itemCount: recommendations.length, // Using recommendations count
+                  itemCount:
+                      recommendations.length, // Using recommendations count
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return AnimatedContainer(
@@ -269,8 +283,11 @@ class _ShopScreenState extends State<ShopScreen> {
                         onTap: () {
                           setState(() {
                             tappedIndex = index;
-                            cartItems.add(
-                              Product(name: recommendations[index], price: 10.0, imagePath: '', color: myGrayColor,
+                            cartItems.add(Product(
+                              name: recommendations[index],
+                              price: 10.0,
+                              imagePath: '',
+                              color: myGrayColor,
                             ));
                           });
                         },
@@ -358,11 +375,14 @@ class CategoryProductList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          product.imagePath, // Use the image path from the product
+                          product
+                              .imagePath, // Use the image path from the product
                           width: 80, // Set the image width as needed
                           height: 80, // Set the image height as needed
                         ),
-                        SizedBox(height: 8), // Add some spacing between image and text
+                        SizedBox(
+                            height:
+                                8), // Add some spacing between image and text
                         Text(
                           product.name,
                           style: TextStyle(
@@ -371,7 +391,8 @@ class CategoryProductList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    color: product.color, // Use the color defined in the product
+                    color:
+                        product.color, // Use the color defined in the product
                   ),
                 ),
               );
@@ -397,5 +418,5 @@ String extractNameFromEmail(String email) {
 }
 
 void main() => runApp(MaterialApp(
-  home: ShopScreen(userEmail: "example@example.com"),
-));
+      home: ShopScreen(userEmail: "example@example.com"),
+    ));

@@ -1,13 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shopping_assistance_system/screens/productScreen.dart';
 import 'package:shopping_assistance_system/screens/mapScreen.dart';
 import 'package:shopping_assistance_system/screens/shopInfoScreen.dart';
 import 'package:shopping_assistance_system/screens/shopScreen.dart';
+import 'package:http/http.dart' as http;
 
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
+  final String userEmail;
 
-  CartScreen({required this.cartItems});
+  const CartScreen({required this.cartItems, required this.userEmail});
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -22,6 +26,30 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
     for (final item in widget.cartItems) {
       itemCountMap[item] = 1;
+    }
+  }
+
+  Future<void> updateHistory() async {
+    try {
+      // Send a POST request to update the history table.
+      final response = await http.post(
+        Uri.parse('http://18.142.249.120:5650/save_history'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'userEmail': widget.userEmail,
+          'cartItems': widget.cartItems.map((item) => item.name).toList(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('History updated successfully');
+      } else {
+        print('Failed to update history');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -149,7 +177,8 @@ class _CartScreenState extends State<CartScreen> {
           Container(
             margin: EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                await updateHistory();
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
