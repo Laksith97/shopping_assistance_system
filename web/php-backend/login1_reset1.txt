@@ -1,0 +1,104 @@
+from flask import Flask, request, jsonify
+import pymysql
+import hashlib
+
+app = Flask(__name__)
+
+def get_db_connection():
+    connection = pymysql.connect(
+        host='shopping-app-db.cmblrafd76se.eu-north-1.rds.amazonaws.com',
+        user='admin',
+        password='SSASapp23',
+        db='shopping_app_db',
+        charset='utf8mb4'
+    )
+    return connection
+
+def generate_hashed_password(password: str):
+    """Hash and salt the provided password string"""
+    hashed = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), b'salt', 100000)
+    return hashed.hex()
+
+@app.route('/reset1', methods=['POST'])
+def reset1():
+    data = request.get_json()
+    email = data['email']
+    new_password = data['new_password']
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    try:
+        # Check if the email exists
+        sql = "SELECT * FROM users WHERE Email=%s"
+        cursor.execute(sql, (email,))
+        result = cursor.fetchone()
+
+        if not result:
+            return jsonify({"status": "Error", "message": "User not found"}), 404
+
+        # Hash the new password before saving
+        hashed_password = generate_hashed_password(new_password)
+        update_sql = "UPDATE users SET Password=%s WHERE Email=%s"
+        cursor.execute(update_sql, (hashed_password, email))
+        connection.commit()
+        return jsonify({"status": "Success", "message": "Password updated successfully!"}), 200
+    finally:
+        cursor.close()
+        connection.close()
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5333, debug=True)
+
+=============================================================================
+
+from flask import Flask, request, jsonify
+import pymysql
+import hashlib  # Added this import
+
+app = Flask(__name__)
+
+def get_db_connection():
+    connection = pymysql.connect(
+        host='shopping-app-db.cmblrafd76se.eu-north-1.rds.amazonaws.com',
+        user='admin',
+        password='SSASapp23',
+        db='shopping_app_db',
+        charset='utf8mb4'
+    )
+    return connection
+
+def generate_hashed_password(password: str):
+    """Hash and salt the provided password string"""
+    hashed = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), b'salt', 100000)
+    return hashed.hex()
+
+@app.route('/login1', methods=['POST'])
+def login1():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    try:
+        # Check if the email exists
+        sql = "SELECT Password FROM users WHERE Email=%s"
+        cursor.execute(sql, (email,))
+        result = cursor.fetchone()
+
+        if result:
+            hashed_input_password = generate_hashed_password(password)  # Hash the provided password
+            if result[0] == hashed_input_password:  # Compare hashed passwords
+                return jsonify({"status": "Success", "message": "Login successful"}), 200
+            else:
+                return jsonify({"status": "Error", "message": "Incorrect email or password"}), 401
+        else:
+            return jsonify({"status": "Error", "message": "Incorrect email or password"}), 401
+    finally:
+        cursor.close()
+        connection.close()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5222, debug=True)
+
