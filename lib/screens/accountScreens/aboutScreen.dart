@@ -50,7 +50,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'About Our Shopping App Developers',
+                    'Developers Behind the Shopping App',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -66,7 +67,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Welcome to the heart and soul of our shopping app - the talented team of developers who turn your digital retail dreams into a seamless and user-friendly reality. At [Your Company Name], we take pride in our commitment to creating a shopping experience that transcends boundaries and exceeds expectations.",
+                    "Welcome to the heart and soul of our shopping app - the talented team of developers who turn your digital retail dreams into a seamless and user-friendly reality. We take pride in our commitment to creating a shopping experience that transcends boundaries and exceeds expectations.",
+                    textAlign: TextAlign.justify,
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -79,6 +81,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   SizedBox(height: 10),
                   Text(
                     "Our mission is simple but profound: to innovate, design, and develop shopping apps that not only meet your immediate needs but also anticipate your future desires. We believe in the transformative power of technology to enhance your shopping journey and simplify your life.",
+                    textAlign: TextAlign.justify,
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -90,7 +93,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Laksith Ratnayake, Malinda Senavirathna, Ravindu Godage, Yohan Perera, Chamod Senarathna,",
+                    "Laksith Ratnayake\nMalinda Senavirathna\nRavindu Godage\nYohan Perera\nChamod Senarathna",
+                    textAlign: TextAlign.center,
                   ),
                   Divider(
                     color: Colors.grey,

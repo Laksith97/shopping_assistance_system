@@ -5,6 +5,8 @@ import 'package:shopping_assistance_system/screens/shopScreen.dart';
 import 'package:shopping_assistance_system/screens/notificationsScreen.dart';
 import 'package:shopping_assistance_system/screens/accountScreen.dart';
 
+import '../screens/loginScreen.dart';
+
 class AppPage {
   static List<GetPage> routes = [
     GetPage(
@@ -23,7 +25,8 @@ class AppPage {
         name: account,
         page: () => const AccountScreen(
               userEmail: '',
-            ))
+            )),
+    GetPage(name: login, page: () => const LoginScreen())
   ];
 
   static String navbar = '/';
@@ -31,4 +34,5 @@ class AppPage {
   static String notifications = '/note';
   static String promotions = '/chart';
   static String account = '/settings';
+  static String login = '/login';
 }
