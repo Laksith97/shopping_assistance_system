@@ -13,7 +13,7 @@ class _ResetScreenState extends State<ResetScreen> {
   final emailController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  String get baseUrl => 'http://43.205.254.104:5300/reset';
+  String get baseUrl => 'http://43.205.254.104:5333/reset1';
 
   @override
   Widget build(BuildContext context) {
